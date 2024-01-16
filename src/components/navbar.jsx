@@ -20,7 +20,6 @@ export default function Navbar() {
 
     const { colorMode } = useColorMode();
     const bg = useColorModeValue('rgba(255, 255, 255, 0.56)', 'rgba(26, 32, 44, 0.75)')
-    // const bg = useColorModeValue('linear-gradient(180deg, rgba(173, 216, 230, 0.4) 10%, transparent)', 'linear-gradient(180deg, rgba(0, 0, 0, .4) 10%, transparent)')
     const logoSrc = colorMode === 'light' ? logo_light : logo_dark;
 
     useEffect(() => {
@@ -62,7 +61,7 @@ export default function Navbar() {
     }, []);
 
     return (
-        <Box w='100vw' h={isSmallScreen ? "60px" : "70px"} bg={isScrolled ? bg : 'transparent'} boxShadow={isScrolled ? '0 4px 30px rgba(0,0,0, 0.1)' : 'none'} backdropFilter={isScrolled ? 'blur(8.2px)' : 'none'} position='fixed' top={0} zIndex={100}>
+        <Box w='100vw' h={isSmallScreen ? "60px" : "70px"} bg={isScrolled ? bg : 'transparent'} boxShadow={isScrolled ? '0 4px 30px rgba(0,0,0, 0.1)' : 'none'} backdropFilter={isScrolled ? 'blur(8.2px)' : 'none'}>
             <Flex w={isSmallScreen ? "85%" : "1400px"} h='100%' m='0 auto' justifyContent='space-between' alignItems='center'>
                 <Image src={logoSrc} boxSize={isSmallScreen ? "55px" : "65px"} />
 

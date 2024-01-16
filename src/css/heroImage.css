@@ -1,0 +1,9 @@
+.dot.active {
+    background: #000;
+    border: 2px solid green;
+}
+
+.dot:focus {
+    background: #fefefe;
+    outline: none;
+}

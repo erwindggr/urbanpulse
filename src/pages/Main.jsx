@@ -6,9 +6,6 @@ export default function Main() {
         <>
         <Navbar />
         <HeroImage />
-        <HeroImage />
-        <HeroImage />
-        <HeroImage />
         </>
     )
 }
