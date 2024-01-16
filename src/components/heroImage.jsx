@@ -27,7 +27,7 @@ export default function HeroImage() {
             <Box position='relative'>
                 <Flex ref={sliderRef} className="keen-slider">
                     <Box className="keen-slider__slide">
-                        <Image w='100%' h='auto' src={heroImg1} objectFit='contain' />
+                        <Image w='100%' h='auto' minH='65vh' src={heroImg1} objectFit='cover' />
                         <Box
                             position='absolute'
                             top='50%'
@@ -41,7 +41,7 @@ export default function HeroImage() {
                         </Box>
                     </Box>
                     <Box className="keen-slider__slide">
-                        <Image w='100%' h='auto' src={heroImg2} objectFit='contain' />
+                        <Image w='100%' h='auto' minH='65vh' src={heroImg2} objectFit='cover' objectPosition='left' />
                         <Box
                             position='absolute'
                             top='50%'
@@ -55,7 +55,7 @@ export default function HeroImage() {
                         </Box>
                     </Box>
                     <Box className="keen-slider__slide">
-                        <Image w='100%' h='auto' src={heroImg3} objectFit='contain' />
+                        <Image w='100%' h='auto' minH='65vh' src={heroImg3} objectFit='cover' objectPosition='right' />
                         <Box
                             position='absolute'
                             top='50%'
@@ -83,9 +83,9 @@ export default function HeroImage() {
                     ].map((idx) => {
                         return (
                             <Button
-                                border='none' size='xs'
-                                bg='#c5c5c5' borderRadius='50' m='0 5px'
-                                p='5px' cursor='pointer'
+                                border='2px solid gray' size='xs'
+                                bg='none' borderRadius='50%' m='0 5px'
+                                padding='5px' cursor='pointer'
                                 key={idx}
                                 onClick={() => {
                                     instanceRef.current?.moveToIdx(idx)

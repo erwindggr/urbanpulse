@@ -62,8 +62,8 @@ export default function Navbar() {
 
     return (
         <Box w='100vw' h={isSmallScreen ? "60px" : "70px"} bg={isScrolled ? bg : 'transparent'} boxShadow={isScrolled ? '0 4px 30px rgba(0,0,0, 0.1)' : 'none'} backdropFilter={isScrolled ? 'blur(8.2px)' : 'none'}>
-            <Flex w={isSmallScreen ? "85%" : "1400px"} h='100%' m='0 auto' justifyContent='space-between' alignItems='center'>
-                <Image src={logoSrc} boxSize={isSmallScreen ? "55px" : "65px"} />
+            <Flex w={isSmallScreen ? "100%" : "90%"} h='100%' m='0 auto' justifyContent='space-between' alignItems='center'>
+                <Image src={logoSrc} h={isSmallScreen ? "40%" : "70%"} />
 
                 <Flex alignItems="center">
                     {
