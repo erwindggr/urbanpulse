@@ -1,4 +1,8 @@
 .dot.active {
-    background: white;
-    border: 2px solid white;
+    background-color: white;
+    border: none;
+}
+
+.dot {
+    scale: 0.6;
 }

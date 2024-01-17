@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import {
     useColorModeValue, useColorMode, Box, Avatar, Image,
-    Flex, Link, Menu, MenuButton, MenuList, MenuItem
+    Flex, Link, Menu, MenuButton, MenuList, MenuItem, Text
 } from "@chakra-ui/react";
 import logo_dark from "../image/logo_dark.png";
 import logo_light from "../image/logo_light.png";
@@ -10,16 +10,15 @@ import { useMediaQuery } from "@chakra-ui/react";
 import ToggleDarkMode from './toggledarkmode';
 import CategoryMenu from './categoryMenu';
 import ShoppingCart from './shoppingCart';
+import NavDrawer from './navbarDrawer';
 
 export default function Navbar() {
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [isVertical, setIsVertical] = useState(false);
-    const [isScrolled, setIsScrolled] = useState(false);
 
     const { colorMode } = useColorMode();
-    const bg = useColorModeValue('rgba(255, 255, 255, 0.56)', 'rgba(26, 32, 44, 0.75)')
     const logoSrc = colorMode === 'light' ? logo_light : logo_dark;
 
     useEffect(() => {
@@ -46,60 +45,62 @@ export default function Navbar() {
         setIsVertical(isPhoneScreen);
     }, [isPhoneScreen]);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const scrollTop = window.scrollY;
-            setIsScrolled(scrollTop > 0);
-        };
-
-        window.addEventListener('scroll', handleScroll);
-
-        // Cleanup the event listener on component unmount
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
-
     return (
-        <Box w='100vw' h={isSmallScreen ? "60px" : "70px"} bg={isScrolled ? bg : 'transparent'} boxShadow={isScrolled ? '0 4px 30px rgba(0,0,0, 0.1)' : 'none'} backdropFilter={isScrolled ? 'blur(8.2px)' : 'none'}>
-            <Flex w={isSmallScreen ? "100%" : "90%"} h='100%' m='0 auto' justifyContent='space-between' alignItems='center'>
-                <Image src={logoSrc} h={isSmallScreen ? "40%" : "70%"} />
+        <Box w='100vw' h={isSmallScreen ? "60px" : "70px"} >
+            <Flex w={isVertical ? "95%" : "90%"} h='100%' m='0 auto' justifyContent='space-between' alignItems='center'>
+                {
+                    isVertical ? (
+                        <>
+                            <NavDrawer/>
+                            <Image src={logoSrc} h={isSmallScreen ? "30px" : "40px"} />
+                        </>
+                    ) :
+                        (
+                            <Flex h='100%' alignItems='center'>
+                                <Image src={logoSrc} h={isSmallScreen ? "30px" : "40px"} />
 
-                <Flex alignItems="center">
-                    {
-                        isVertical ? (
-                            <>
-                                <CategoryMenu categories={data} />
-                            </>
-                        ) : (
-                            <Box as='ul' display="flex">
-                                {data ? (
-                                    <>
-                                        <Flex w='600px' justifyContent='space-between'>
-                                            {
-                                                data.slice().reverse().map((category, index) => (
-                                                    <Link key={index} fontWeight='bold'>{category.charAt(0).toUpperCase() + category.slice(1)}</Link>
-                                                ))
-                                            }
-                                        </Flex>
-                                    </>
-                                ) : error ? (
-                                    <div>Error: {error.message}</div>
-                                ) : (
-                                    <>
-                                    </>
-                                )}
-                            </Box>
+                                <Flex alignItems="center">
+                                    {
+                                        isVertical ? (
+                                            <>
+                                                <CategoryMenu categories={data} />
+                                            </>
+                                        ) : (
+                                            <Box as='ul' display="flex">
+                                                {data ? (
+                                                    <>
+                                                        <Flex w='430px' justifyContent='space-between' ml={5}>
+                                                            {
+                                                                data.slice().reverse().map((category, index) => (
+                                                                    <Link key={index} fontWeight='bold'>
+                                                                        <Text fontSize={16}>
+                                                                            {category.charAt(0).toUpperCase() + category.slice(1)}
+                                                                        </Text>
+                                                                    </Link>
+                                                                ))
+                                                            }
+                                                        </Flex>
+                                                    </>
+                                                ) : error ? (
+                                                    <div>Error: {error.message}</div>
+                                                ) : (
+                                                    <>
+                                                    </>
+                                                )}
+                                            </Box>
+                                        )
+                                    }
+                                </Flex>
+                            </Flex>
                         )
-                    }
+                }
 
-                </Flex>
 
                 <Flex w='150px' justifyContent='space-between' alignItems='center'>
                     <ShoppingCart />
 
                     <Menu>
-                        <MenuButton as={Avatar} bg='#f0daa4' boxSize={isSmallScreen ? '25px' : '35px'} />
+                        <MenuButton as={Avatar} bg='gray' boxSize={isSmallScreen ? '25px' : '35px'} />
                         <MenuList>
                             <MenuItem>Profile</MenuItem>
                             <MenuItem>Setting</MenuItem>

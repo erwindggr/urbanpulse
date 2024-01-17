@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Flex, Heading, Text, Image, Button, Center } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, Image, Button } from "@chakra-ui/react";
 import '../css/heroImage.css';
 import heroImg1 from "../image/horizontal-01.jpg";
 import heroImg2 from "../image/horizontal-02.jpg";
@@ -20,7 +20,37 @@ export default function HeroImage() {
             created() {
                 setLoaded(true)
             },
-        }
+        },
+        [
+            (slider) => {
+                let timeout
+                let mouseOver = false
+                function clearNextTimeout() {
+                    clearTimeout(timeout)
+                }
+                function nextTimeout() {
+                    clearTimeout(timeout)
+                    if (mouseOver) return
+                    timeout = setTimeout(() => {
+                        slider.next()
+                    }, 3000)
+                }
+                slider.on("created", () => {
+                    slider.container.addEventListener("mouseover", () => {
+                        mouseOver = true
+                        clearNextTimeout()
+                    })
+                    slider.container.addEventListener("mouseout", () => {
+                        mouseOver = false
+                        nextTimeout()
+                    })
+                    nextTimeout()
+                })
+                slider.on("dragStarted", clearNextTimeout)
+                slider.on("animationEnded", nextTimeout)
+                slider.on("updated", nextTimeout)
+            },
+        ]
     );
     return (
         <>
@@ -34,7 +64,6 @@ export default function HeroImage() {
                             left='50%'
                             transform='translate(-50%, -50%)'
                             textAlign='center'
-                            color='white'  // Adjust text color as needed
                         >
                             <Heading fontSize='3xl'>Your Heading</Heading>
                             <Text fontSize='md'>Your Subheading</Text>
@@ -48,7 +77,6 @@ export default function HeroImage() {
                             left='50%'
                             transform='translate(-50%, -50%)'
                             textAlign='center'
-                            color='white'  // Adjust text color as needed
                         >
                             <Heading fontSize='3xl'>Your Heading</Heading>
                             <Text fontSize='md'>Your Subheading</Text>
@@ -62,7 +90,6 @@ export default function HeroImage() {
                             left='50%'
                             transform='translate(-50%, -50%)'
                             textAlign='center'
-                            color='white'  // Adjust text color as needed
                         >
                             <Heading fontSize='3xl'>Your Heading</Heading>
                             <Text fontSize='md'>Your Subheading</Text>
@@ -84,7 +111,7 @@ export default function HeroImage() {
                         return (
                             <Button
                                 border='2px solid gray' size='xs'
-                                bg='none' borderRadius='50%' m='0 5px'
+                                bg='none' borderRadius='50%' 
                                 padding='5px' cursor='pointer'
                                 key={idx}
                                 onClick={() => {
