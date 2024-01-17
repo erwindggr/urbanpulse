@@ -7,6 +7,8 @@ import heroImg3 from "../image/horizontal-03.jpg";
 import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
 
+const animation = { duration: 3500, easing: (t) => t }
+
 export default function HeroImage() {
     const [currentSlide, setCurrentSlide] = useState(0)
     const [loaded, setLoaded] = useState(false)
@@ -32,7 +34,8 @@ export default function HeroImage() {
                     clearTimeout(timeout)
                     if (mouseOver) return
                     timeout = setTimeout(() => {
-                        slider.next()
+                        slider.moveToIdx(slider.track.details.abs + 1, true, animation)
+                        // slider.next()
                     }, 3000)
                 }
                 slider.on("created", () => {
@@ -54,24 +57,24 @@ export default function HeroImage() {
     );
     return (
         <>
-            <Box position='relative'>
+            <Box position='relative' >
                 <Flex ref={sliderRef} className="keen-slider">
                     <Box className="keen-slider__slide">
                         <Image w='100%' h='auto' minH='65vh' src={heroImg1} objectFit='cover' />
-                        <Box
+                        {/* <Box
                             position='absolute'
-                            top='50%'
+                            top='70%'
                             left='50%'
                             transform='translate(-50%, -50%)'
                             textAlign='center'
                         >
                             <Heading fontSize='3xl'>Your Heading</Heading>
                             <Text fontSize='md'>Your Subheading</Text>
-                        </Box>
+                        </Box> */}
                     </Box>
                     <Box className="keen-slider__slide">
                         <Image w='100%' h='auto' minH='65vh' src={heroImg2} objectFit='cover' objectPosition='left' />
-                        <Box
+                        {/* <Box
                             position='absolute'
                             top='50%'
                             left='50%'
@@ -80,11 +83,11 @@ export default function HeroImage() {
                         >
                             <Heading fontSize='3xl'>Your Heading</Heading>
                             <Text fontSize='md'>Your Subheading</Text>
-                        </Box>
+                        </Box> */}
                     </Box>
                     <Box className="keen-slider__slide">
                         <Image w='100%' h='auto' minH='65vh' src={heroImg3} objectFit='cover' objectPosition='right' />
-                        <Box
+                        {/* <Box
                             position='absolute'
                             top='50%'
                             left='50%'
@@ -93,36 +96,38 @@ export default function HeroImage() {
                         >
                             <Heading fontSize='3xl'>Your Heading</Heading>
                             <Text fontSize='md'>Your Subheading</Text>
-                        </Box>
+                        </Box> */}
                     </Box>
                 </Flex>
+
+                {loaded && instanceRef.current && (
+                    <Flex
+                        className="dots" p="10px 0" justifyContent='center'
+                        position='absolute'
+                        bottom='10'
+                        width='100%'
+                    >
+                        {[
+                            ...Array(instanceRef.current.track.details.slides.length).keys(),
+                        ].map((idx) => {
+                            return (
+                                <Button
+                                    border='2px solid gray' size='xs'
+                                    bg='none' borderRadius='50%'
+                                    padding='5px' cursor='pointer'
+                                    key={idx}
+                                    onClick={() => {
+                                        instanceRef.current?.moveToIdx(idx)
+                                    }}
+                                    className={"dot" + (currentSlide === idx ? " active" : "")}
+                                ></Button>
+                            )
+                        })}
+                    </Flex>
+                )}
             </Box>
 
-            {loaded && instanceRef.current && (
-                <Flex
-                    className="dots" p="10px 0" justifyContent='center'
-                    position='absolute'
-                    bottom='10'
-                    width='100%'
-                >
-                    {[
-                        ...Array(instanceRef.current.track.details.slides.length).keys(),
-                    ].map((idx) => {
-                        return (
-                            <Button
-                                border='2px solid gray' size='xs'
-                                bg='none' borderRadius='50%' 
-                                padding='5px' cursor='pointer'
-                                key={idx}
-                                onClick={() => {
-                                    instanceRef.current?.moveToIdx(idx)
-                                }}
-                                className={"dot" + (currentSlide === idx ? " active" : "")}
-                            ></Button>
-                        )
-                    })}
-                </Flex>
-            )}
+
         </>
     )
 }

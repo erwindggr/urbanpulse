@@ -46,7 +46,7 @@ export default function Navbar() {
     }, [isPhoneScreen]);
 
     return (
-        <Box w='100vw' h={isSmallScreen ? "60px" : "70px"} >
+        <Box w='100%' h={isSmallScreen ? "60px" : "70px"} >
             <Flex w={isVertical ? "95%" : "90%"} h='100%' m='0 auto' justifyContent='space-between' alignItems='center'>
                 {
                     isVertical ? (

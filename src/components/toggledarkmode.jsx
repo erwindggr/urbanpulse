@@ -22,10 +22,6 @@ export default function ToggleDarkMode() {
         transform: isSlid ? 'translateX(8px)' : 'translateX(0)',
     };
 
-    const scaledStyles = {
-        transform: 'scale(0.6)',
-    };
-
     return (
         <Box borderRadius={50} w='40px' h='23px' border={themeBorder} bg={themeButton}>
             <Flex as='button' w='28px' h="19px" onClick={handleToggle} style={slideStyles} borderRadius={50} bg={themeBg} alignItems='center' justifyContent='center'>
@@ -34,9 +30,3 @@ export default function ToggleDarkMode() {
         </Box>
     )
 }
-
-{/* <Box borderRadius={50} w='65px' h='39px' border={themeBorder} bg={themeButton} style={scaledStyles}>
-            <Box as='button' w='51px' h="35px" onClick={handleToggle} style={slideStyles} borderRadius={50} bg={themeBg}>
-                {themeIcon}
-            </Box>
-        </Box> */}
