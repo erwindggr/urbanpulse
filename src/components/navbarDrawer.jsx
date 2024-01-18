@@ -1,23 +1,44 @@
 import {
     Drawer,
     DrawerBody,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerOverlay,
-    DrawerContent,
-    DrawerCloseButton, Button,
-    IconButton , useDisclosure, Input
+    DrawerFooter, Text,
+    DrawerHeader, Link,
+    DrawerOverlay, Flex,
+    DrawerContent, useColorMode,
+    DrawerCloseButton, Button, Image,
+    IconButton, useDisclosure, Box, Divider
 } from '@chakra-ui/react';
-import { HamburgerIcon } from '@chakra-ui/icons'
-import React from 'react';
+import { HamburgerIcon } from '@chakra-ui/icons';
+import logo_dark from "../image/logo_dark.png";
+import logo_light from "../image/logo_light.png";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-export default function NavDrawer() {
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const btnRef = React.useRef()
+export default function NavDrawer(props) {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [data, setData] = useState(null);
+    const [error, setError] = useState(null);
+    const btnRef = React.useRef();
+
+    const { colorMode } = useColorMode();
+    const logoSrc = colorMode === 'light' ? logo_light : logo_dark;
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('https://fakestoreapi.com/products/categories');
+                setData(response.data);
+            } catch (error) {
+                setError(error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <>
-            <IconButton size='sm'  ref={btnRef} bg='none' onClick={onOpen} icon={<HamburgerIcon boxSize='20px' />} _hover={{ bgColor: 'none' }} _active={{ bgColor: 'none' }} />
+            <IconButton size='sm' ref={btnRef} bg='none' onClick={onOpen} icon={<HamburgerIcon boxSize='20px' />} _hover={{ bgColor: 'none' }} _active={{ bgColor: 'none' }} />
             <Drawer
                 isOpen={isOpen}
                 placement='left'
@@ -27,18 +48,26 @@ export default function NavDrawer() {
                 <DrawerOverlay />
                 <DrawerContent>
                     <DrawerCloseButton />
-                    <DrawerHeader>Create your account</DrawerHeader>
+                    <DrawerHeader>
+                        <Image src={logoSrc} h='30px' />
+                    </DrawerHeader>
 
                     <DrawerBody>
-                        <Input placeholder='Type here...' />
+                        <Flex flexDirection='column' mt={5}>
+                            {
+                                data?.slice().reverse().map((category, index) => (
+                                    <Box>
+                                        <Link key={index}>
+                                            <Text fontWeight='bold' fontSize='xl' my={3}>
+                                                {category.charAt(0).toUpperCase() + category.slice(1)}
+                                            </Text>
+                                        </Link>
+                                        <Divider />
+                                    </Box>
+                                ))
+                            }
+                        </Flex>
                     </DrawerBody>
-
-                    <DrawerFooter>
-                        <Button variant='outline' mr={3} onClick={onClose}>
-                            Cancel
-                        </Button>
-                        <Button colorScheme='blue'>Save</Button>
-                    </DrawerFooter>
                 </DrawerContent>
             </Drawer>
         </>

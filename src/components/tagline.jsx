@@ -2,45 +2,58 @@
 
 import React from 'react';
 import { Flex, Box, Text, Divider } from '@chakra-ui/react';
+import { useMediaQuery } from "@chakra-ui/react";
 
 export default function TagLine() {
+    const [isPhoneScreen] = useMediaQuery("(max-width: 1200px)");
+
     return (
         <Flex
+            flexDirection={isPhoneScreen ? "column" : "row"}
+            // py={isPhoneScreen ? "25px" : "none"}
+            p={10}
             align="center"
             justify="center"
-            height="200px" // Adjust the height based on your design preferences
+            // height={isPhoneScreen ? "550px" : "400px"} // Adjust the height based on your design preferences
         >
             {/* Item 1 */}
-            <Box textAlign="center" p={4} w='350px'>
-                <Text fontWeight="bold" fontSize="lg" mb={2}>
-                    Craftsmanship
-                </Text>
+            <Flex textAlign="center" p={4} w={isPhoneScreen ? '95%' : '350px'} flexDirection={isPhoneScreen ? "column" : "row"}>
+                <Box w='100%'>
+                    <Text fontWeight="bold" fontSize="xl" mb={2}>
+                        Craftsmanship
+                    </Text>
 
-                <Text fontSize="sm">
-                    Elevate your style with meticulously handcrafted frames.
-                </Text>
-            </Box>
-            <Divider orientation="vertical" mx={4} height='100px' />
+                    <Text fontSize="md">
+                        Sustainability Meets Artistry – 100% Original, Handcrafted for You
+                    </Text>
+                </Box>
+                <Divider orientation={isPhoneScreen ? "horizontal" : "vertical"} h={isPhoneScreen ? "0px" : "100px"} mt={isPhoneScreen ? "20px" : "0"} mx={isPhoneScreen ? "0" : "20px"} />
+            </Flex>
             {/* Item 2 */}
-            <Box textAlign="center" p={4} w='350px'>
-                <Text fontWeight="bold" fontSize="lg" mb={2}>
-                    Cutting-Edge Fashion
-                </Text>
+            <Flex textAlign="center" p={4} w={isPhoneScreen ? '95%' : '350px'} flexDirection={isPhoneScreen ? "column" : "row"}>
+                <Box w='100%'>
+                    <Text fontWeight="bold" fontSize="xl" mb={2}>
+                        Artistry Showcase
+                    </Text>
 
-                <Text fontSize="sm">
-                    Stay ahead of trends with our fashion-forward frames and accessories.
-                </Text>
-            </Box>
-            <Divider orientation="vertical" mx={4} height='100px' />
+                    <Text fontSize="md">
+                        Elevate Fashion Sustainably with Originality
+                    </Text>
+                </Box>
+                <Divider orientation={isPhoneScreen ? "horizontal" : "vertical"} h={isPhoneScreen ? "0px" : "100px"} mt={isPhoneScreen ? "20px" : "0"} mx={isPhoneScreen ? "0" : "20px"} />
+            </Flex>
             {/* Item 3 */}
-            <Box textAlign="center" p={4} w='350px'>
-                <Text fontWeight="bold" mb={2}>
-                    Smart Style
-                </Text>
-                <Text fontSize="sm">
-                    Elevate your look and contribute to a sustainable future with our eco-conscious fashion.
-                </Text>
-            </Box>
+            <Flex textAlign="center" p={4} w={isPhoneScreen ? '95%' : '350px'} flexDirection={isPhoneScreen ? "column" : "row"}>
+                <Box w='100%' h='100px'>
+                    <Text fontWeight="bold" fontSize="xl" mb={2}>
+                        Personal Style
+                    </Text>
+
+                    <Text fontSize="md">
+                        Unwrap the Future of Style, Where Your Style Meets the Planet
+                    </Text>
+                </Box>
+            </Flex>
         </Flex>
     );
 }

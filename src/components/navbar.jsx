@@ -51,7 +51,7 @@ export default function Navbar() {
                 {
                     isVertical ? (
                         <>
-                            <NavDrawer/>
+                            <NavDrawer categories={data} />
                             <Image src={logoSrc} h={isSmallScreen ? "30px" : "40px"} />
                         </>
                     ) :

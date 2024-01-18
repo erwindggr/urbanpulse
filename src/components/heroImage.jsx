@@ -6,8 +6,9 @@ import heroImg2 from "../image/horizontal-02.jpg";
 import heroImg3 from "../image/horizontal-03.jpg";
 import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
+import BigButton from "./bigButton";
 
-const animation = { duration: 3500, easing: (t) => t }
+const animation = { duration: 3000, easing: (t) => t }
 
 export default function HeroImage() {
     const [currentSlide, setCurrentSlide] = useState(0)
@@ -60,43 +61,40 @@ export default function HeroImage() {
             <Box position='relative' >
                 <Flex ref={sliderRef} className="keen-slider">
                     <Box className="keen-slider__slide">
-                        <Image w='100%' h='auto' minH='65vh' src={heroImg1} objectFit='cover' />
-                        {/* <Box
+                        <Image w='100%' h='auto' minH='550px' src={heroImg1} objectFit='cover' />
+                        <Box
                             position='absolute'
-                            top='70%'
+                            top='80%'
                             left='50%'
                             transform='translate(-50%, -50%)'
                             textAlign='center'
                         >
-                            <Heading fontSize='3xl'>Your Heading</Heading>
-                            <Text fontSize='md'>Your Subheading</Text>
-                        </Box> */}
+                            <BigButton text={"Shop Men's Clothing"} />
+                        </Box>
                     </Box>
                     <Box className="keen-slider__slide">
-                        <Image w='100%' h='auto' minH='65vh' src={heroImg2} objectFit='cover' objectPosition='left' />
-                        {/* <Box
+                        <Image w='100%' h='auto' minH='550px' src={heroImg2} objectFit='cover' objectPosition='left' />
+                        <Box
                             position='absolute'
-                            top='50%'
+                            top='80%'
                             left='50%'
                             transform='translate(-50%, -50%)'
                             textAlign='center'
                         >
-                            <Heading fontSize='3xl'>Your Heading</Heading>
-                            <Text fontSize='md'>Your Subheading</Text>
-                        </Box> */}
+                            <BigButton text={"Shop Jewelery"} />
+                        </Box>
                     </Box>
                     <Box className="keen-slider__slide">
-                        <Image w='100%' h='auto' minH='65vh' src={heroImg3} objectFit='cover' objectPosition='right' />
-                        {/* <Box
+                        <Image w='100%' h='auto' minH='550px' src={heroImg3} objectFit='cover' objectPosition='right' />
+                        <Box
                             position='absolute'
-                            top='50%'
+                            top='80%'
                             left='50%'
                             transform='translate(-50%, -50%)'
                             textAlign='center'
                         >
-                            <Heading fontSize='3xl'>Your Heading</Heading>
-                            <Text fontSize='md'>Your Subheading</Text>
-                        </Box> */}
+                            <BigButton text={"Shop Women's Clothing"} />
+                        </Box>
                     </Box>
                 </Flex>
 
