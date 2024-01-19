@@ -2,21 +2,20 @@ import Navbar from "../components/navbar";
 import HeroImage from "../components/heroImage";
 import TagLine from "../components/tagline";
 import { Image, Grid, GridItem, Flex, Heading, Button } from "@chakra-ui/react";
-import ItemCard from "../components/itemCard";
-import { useMediaQuery } from "@chakra-ui/react";
 import Section from "../components/section";
 import s1 from "../image/Section-Man.jpg";
 import s2 from "../image/section-woman.jpg";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useKeenSlider } from "keen-slider/react"
-import "keen-slider/keen-slider.min.css"
+import { useKeenSlider } from "keen-slider/react";
+import "keen-slider/keen-slider.min.css";
+import { usePhoneScreenMediaQuery } from "../mediaQuery/mediaQueries";
 
 export default function Main() {
     const [productData, setProductData] = useState(null);
     const [error, setError] = useState(null);
 
-    const [isPhoneScreen] = useMediaQuery("(max-width: 800px)");
+    const [isPhoneScreen] = usePhoneScreenMediaQuery();
     const [sliderRef] = useKeenSlider({
         loop: true,
         mode: "free-snap",
