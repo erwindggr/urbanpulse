@@ -56,8 +56,9 @@ export default function Main() {
                     <Image src={s1} w='100%' />
                 </GridItem>
             </Grid>
-
-            <Section data={productData} productName={"Women Fashion"} buttonTitle={"Shop Women Fashion"} />
+            <Flex w='100%' overflow='hidden'>
+                <Section data={productData} productName={"Women Fashion"} buttonTitle={"Shop Women Fashion"} />
+            </Flex>
         </>
     )
 }

@@ -11,21 +11,28 @@ export default function Section(props) {
         loop: isPhoneScreen ? true : false,
         mode: "free-snap",
         slides: {
-            perView: isPhoneScreen ? 6 : 4,
+            perView: isPhoneScreen ? 5 : 4,
             spacing: 10,
         },
     })
 
     return (
-        <Flex w='1440px' p="30px 0 50px 0" m='0 auto' flexDirection='column'>
+        <Flex w='1440px' p="30px 0 50px 0" m='0 auto' flexDirection='column' >
             <Flex w='95%' m='0 auto' alignItems={isPhoneScreen ? 'start' : 'center'} justifyContent='start' flexDirection={isPhoneScreen ? 'column' : 'row'} mb={10}>
-                <Heading textAlign='center'>{props.productName}</Heading>
-                <Button mx={isPhoneScreen ? '0' : '10'} my={isPhoneScreen ? '2' : '0'} borderRadius={30} border='2px solid black'>{props.buttonTitle}</Button>
+                <Heading textAlign='center' size={isPhoneScreen ? 'md' : 'lg'}>{props.productName}</Heading>
+                {
+                    isPhoneScreen ? (
+                        <></>
+                    ) : (
+                        <Button mx={isPhoneScreen ? '0' : '10'} my={isPhoneScreen ? '2' : '0'} borderRadius={30} border='2px solid black'>{props.buttonTitle}</Button>
+                    )
+                }
+
             </Flex>
 
             {
                 props.data ? (
-                    <Flex w='90%' m='0 auto' className="keen-slider" ref={sliderRef}>
+                    <Flex w='90%' m='0 auto' className="keen-slider" ref={sliderRef} >
                         {
                             props.data?.slice().map((item, index) => (
                                 <Flex className="keen-slider__slide" key={index}>
@@ -38,6 +45,18 @@ export default function Section(props) {
                     <></>
                 )
             }
+
+            <Flex w='95%' m='0 auto'>
+                {
+                    isPhoneScreen ? (
+                        <Button borderRadius={30} border='2px solid black' size='sm' my={2}>
+                            {props.buttonTitle}
+                        </Button>
+                    ) : (
+                        <></>
+                    )
+                }
+            </Flex>
         </Flex>
     )
 }
