@@ -18,7 +18,7 @@ export default function Section(props) {
 
     return (
         <Flex w='1440px' p="30px 0 50px 0" m='0 auto' flexDirection='column'>
-            <Flex w='95%'  m='0 auto' alignItems={isPhoneScreen ? 'start' : 'center'} justifyContent='start' flexDirection={isPhoneScreen ? 'column' : 'row'} mb={10}>
+            <Flex w='95%' m='0 auto' alignItems={isPhoneScreen ? 'start' : 'center'} justifyContent='start' flexDirection={isPhoneScreen ? 'column' : 'row'} mb={10}>
                 <Heading textAlign='center'>{props.productName}</Heading>
                 <Button mx={isPhoneScreen ? '0' : '10'} my={isPhoneScreen ? '2' : '0'} borderRadius={30} border='2px solid black'>{props.buttonTitle}</Button>
             </Flex>
@@ -38,23 +38,6 @@ export default function Section(props) {
                     <></>
                 )
             }
-
-            {
-                props.data ? (
-                    <Flex w='90%' m='0 auto' className="keen-slider" ref={sliderRef}>
-                        {
-                            props.data?.slice().map((item, index) => (
-                                <Flex className="keen-slider__slide" key={index}>
-                                    <ItemCard key={index} data={item} />
-                                </Flex>
-                            ))
-                        }
-                    </Flex>
-                ) : (
-                    <></>
-                )
-            }
-
         </Flex>
     )
 }
