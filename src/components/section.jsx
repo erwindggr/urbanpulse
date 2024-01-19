@@ -11,7 +11,7 @@ export default function Section(props) {
         loop: isPhoneScreen ? true : false,
         mode: "free-snap",
         slides: {
-            perView: 4,
+            perView: isPhoneScreen ? 6 : 4,
             spacing: 10,
         },
     })
@@ -22,6 +22,22 @@ export default function Section(props) {
                 <Heading textAlign='center'>{props.productName}</Heading>
                 <Button mx={isPhoneScreen ? '0' : '10'} my={isPhoneScreen ? '2' : '0'} borderRadius={30} border='2px solid black'>{props.buttonTitle}</Button>
             </Flex>
+
+            {
+                props.data ? (
+                    <Flex w='90%' m='0 auto' className="keen-slider" ref={sliderRef}>
+                        {
+                            props.data?.slice().map((item, index) => (
+                                <Flex className="keen-slider__slide" key={index}>
+                                    <ItemCard key={index} data={item} />
+                                </Flex>
+                            ))
+                        }
+                    </Flex>
+                ) : (
+                    <></>
+                )
+            }
 
             {
                 props.data ? (
