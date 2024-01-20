@@ -82,9 +82,10 @@ export default function Navbar() {
                                                         </Flex>
                                                     </>
                                                 ) : error ? (
-                                                    <div>Error: {error.message}</div>
+                                                    <div>{error.message}</div>
                                                 ) : (
                                                     <>
+                                                    <Box>data kosong</Box>
                                                     </>
                                                 )}
                                             </Box>

@@ -10,6 +10,11 @@ import { useState, useEffect } from "react";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { usePhoneScreenMediaQuery } from "../mediaQuery/mediaQueries";
+import Content from "../components/content";
+import About from "../components/about";
+import Footer from "../components/footer";
+import content01 from "../image/content-01.jpg";
+import content02 from "../image/content-02.jpg";
 
 export default function Main() {
     const [productData, setProductData] = useState(null);
@@ -59,6 +64,19 @@ export default function Main() {
             <Flex w='100%' overflow='hidden'>
                 <Section data={productData} productName={"Women Fashion"} buttonTitle={"Shop Women Fashion"} />
             </Flex>
+
+            <Content
+                source={content01} title='beatiful jeans'
+                message='hello world' leftPercentage='80%'
+                topPercentage='10%'
+            />
+            <Content
+                source={content02} title='jewelery cool!'
+                message='hehehehe' leftPercentage='10%'
+                topPercentage='70%'
+            />
+            <About />
+            <Footer />
         </>
     )
 }

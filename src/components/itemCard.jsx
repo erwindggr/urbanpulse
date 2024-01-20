@@ -20,7 +20,7 @@ export default function ItemCard(props) {
             transition="filter 0.3s ease-in-out"
         >
             <Flex
-                w='100%' h='70%' justifyContent='center' bg='white' border='1px solid gray' p={5}
+                w='100%' h='70%' justifyContent='center' bg='white'  p={5}
                 overflow='hidden' borderRadius={10}
             >
                 <Image
