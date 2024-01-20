@@ -2,7 +2,7 @@ import { Flex, Text, Heading } from "@chakra-ui/react"
 
 export default function About() {
     return (
-        <Flex w='100%' justifyContent='center' alignItems='center' >
+        <Flex w='100%' justifyContent='center' alignItems='center' bg='#FAEF9B'>
             <Flex w='700px' flexDirection='column' my={20}>
                 <Heading textAlign="left" size='lg' fontWeight="500" mb="4">
                     About Us

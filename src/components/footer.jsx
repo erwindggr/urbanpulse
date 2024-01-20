@@ -9,7 +9,7 @@ import { RiInstagramFill, RiInstagramLine, RiTwitterFill, RiTwitterLine } from "
 export default function Footer() {
     const listStyle = { listStyleType: 'none' };
     return (
-        <Flex w='100%' h='550px' flexDirection='column' mt={10} >
+        <Flex w='100%' h='550px' flexDirection='column' pt={10} bg='#647D87'>
             <Flex w='70%' flex={1} m='0 auto' justifyContent='space-between'>
                 <Flex w='250px' justifyContent='space-between'>
                     <Flex h='100%' alignItems='center'>

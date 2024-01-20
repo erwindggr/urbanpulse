@@ -67,7 +67,7 @@ export default function Main() {
 
             <Content
                 source={content01} title='beatiful jeans'
-                message='hello world' leftPercentage='80%'
+                message='hello world' leftPercentage={isPhoneScreen ? '40%' : '80%'}
                 topPercentage='10%'
             />
             <Content
