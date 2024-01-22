@@ -18,7 +18,9 @@ import content02 from "../image/content-02.jpg";
 
 export default function Main() {
     const [productData, setProductData] = useState(null);
+    const [productData2, setProductData2] = useState(null);
     const [error, setError] = useState(null);
+    const [error2, setError2] = useState(null);
 
     const [isPhoneScreen] = usePhoneScreenMediaQuery();
     const [sliderRef] = useKeenSlider({
@@ -33,7 +35,7 @@ export default function Main() {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await axios.get("https://fakestoreapi.com/products/category/women's clothing");
+                const response = await axios.get("https://fakestoreapi.com/products/category/women's%20clothing");
                 setProductData(response.data);
             } catch (error) {
                 setError(error);
@@ -41,6 +43,19 @@ export default function Main() {
         };
 
         fetchProduct();
+    }, []);
+
+    useEffect(() => {
+        const fetchProduct2 = async () => {
+            try {
+                const response = await axios.get("https://fakestoreapi.com/products/category/men's%20clothing");
+                setProductData2(response.data);
+            } catch (error) {
+                setError2(error);
+            }
+        };
+
+        fetchProduct2();
     }, []);
 
     return (
@@ -62,7 +77,7 @@ export default function Main() {
                 </GridItem>
             </Grid>
             <Flex w='100%' overflow='hidden'>
-                <Section data={productData} productName={"Women Fashion"} buttonTitle={"Shop Women Fashion"} />
+                <Section data={productData} productName={"Women's Fashion"} buttonTitle={"Shop Women's Fashion"} />
             </Flex>
 
             <Content
@@ -70,6 +85,10 @@ export default function Main() {
                 message='hello world' leftPercentage={isPhoneScreen ? '40%' : '80%'}
                 topPercentage='10%'
             />
+
+            <Flex w='100%' overflow='hidden'>
+                <Section data={productData2} productName={"Men's Fashion"} buttonTitle={"Shop Men's Fashion"} />
+            </Flex>
             <Content
                 source={content02} title='jewelery cool!'
                 message='hehehehe' leftPercentage='10%'
