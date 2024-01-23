@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import {
     useColorModeValue, useColorMode, Box, Avatar, Image,
-    Flex, Link, Menu, MenuButton, MenuList, MenuItem, Text
+    Flex, Link, Menu, MenuButton, MenuList, MenuItem, Text,
+    Button
 } from "@chakra-ui/react";
 import logo_dark from "../image/logo_dark.png";
 import logo_light from "../image/logo_light.png";
@@ -11,12 +12,15 @@ import ToggleDarkMode from './toggledarkmode';
 import CategoryMenu from './categoryMenu';
 import ShoppingCart from './shoppingCart';
 import NavDrawer from './navbarDrawer';
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [isVertical, setIsVertical] = useState(false);
+    const userToken = localStorage.getItem("userToken");
+    const navigate = useNavigate();
 
     const { colorMode } = useColorMode();
     const logoSrc = colorMode === 'light' ? logo_light : logo_dark;
@@ -44,6 +48,11 @@ export default function Navbar() {
     useEffect(() => {
         setIsVertical(isPhoneScreen);
     }, [isPhoneScreen]);
+
+    const logout = () => {
+        localStorage.removeItem("userToken");
+        window.location.reload();
+    };
 
     return (
         <Box w='100%' h={isSmallScreen ? "60px" : "70px"} >
@@ -85,7 +94,7 @@ export default function Navbar() {
                                                     <div>{error.message}</div>
                                                 ) : (
                                                     <>
-                                                    <Box>data kosong</Box>
+                                                        <Box>data kosong</Box>
                                                     </>
                                                 )}
                                             </Box>
@@ -100,18 +109,39 @@ export default function Navbar() {
                 <Flex w='150px' justifyContent='space-between' alignItems='center'>
                     <ShoppingCart />
 
-                    <Menu>
+
+                    {
+                        userToken ? (
+                            <Menu>
+                                <MenuButton
+                                    as={Avatar}
+                                    bg="gray"
+                                    boxSize={isSmallScreen ? "25px" : "35px"}
+                                />
+                                <MenuList>
+                                    <MenuItem>Profile</MenuItem>
+                                    <MenuItem>Setting</MenuItem>
+                                    <MenuItem onClick={logout}>Log Out</MenuItem>
+                                </MenuList>
+                            </Menu>
+                        ) : (
+                            <Button as={Link} bg='black' color="white">
+                                <Link href="/login" >Login</Link>
+                            </Button>
+                        )}
+
+                    {/* <Menu>
                         <MenuButton as={Avatar} bg='gray' boxSize={isSmallScreen ? '25px' : '35px'} />
                         <MenuList>
                             <MenuItem>Profile</MenuItem>
                             <MenuItem>Setting</MenuItem>
                             <MenuItem>Log Out</MenuItem>
                         </MenuList>
-                    </Menu>
+                    </Menu> */}
 
                     <ToggleDarkMode />
                 </Flex>
             </Flex>
-        </Box>
+        </Box >
     );
 }

@@ -7,7 +7,6 @@ import s1 from "../image/Section-Man.jpg";
 import s2 from "../image/section-woman.jpg";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { usePhoneScreenMediaQuery } from "../mediaQuery/mediaQueries";
 import Content from "../components/content";
@@ -23,14 +22,6 @@ export default function Main() {
     const [error2, setError2] = useState(null);
 
     const [isPhoneScreen] = usePhoneScreenMediaQuery();
-    const [sliderRef] = useKeenSlider({
-        loop: true,
-        mode: "free-snap",
-        slides: {
-            perView: 4,
-            spacing: 10,
-        },
-    })
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -57,6 +48,8 @@ export default function Main() {
 
         fetchProduct2();
     }, []);
+
+
 
     return (
         <>
