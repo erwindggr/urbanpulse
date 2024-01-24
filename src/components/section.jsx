@@ -1,6 +1,6 @@
 import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
-import { Flex, Heading, Button } from "@chakra-ui/react";
+import { Flex, Heading, Button, Link } from "@chakra-ui/react";
 import ItemCard from "./itemCard";
 import { useEffect } from "react";
 import { usePhoneScreenMediaQuery } from "../mediaQuery/mediaQueries";
@@ -36,7 +36,9 @@ export default function Section(props) {
                         {
                             props.data?.slice().map((item, index) => (
                                 <Flex className="keen-slider__slide" key={index}>
-                                    <ItemCard key={index} data={item} />
+                                    <Link href={`/product/${item.id}`}>
+                                        <ItemCard key={index} data={item} />
+                                    </Link>
                                 </Flex>
                             ))
                         }

@@ -20,7 +20,6 @@ export default function Navbar() {
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [isVertical, setIsVertical] = useState(false);
     const userToken = localStorage.getItem("userToken");
-    const navigate = useNavigate();
 
     const { colorMode } = useColorMode();
     const logoSrc = colorMode === 'light' ? logo_light : logo_dark;
@@ -66,7 +65,9 @@ export default function Navbar() {
                     ) :
                         (
                             <Flex h='100%' alignItems='center'>
-                                <Image src={logoSrc} h={isSmallScreen ? "30px" : "40px"} />
+                                <Link href="/">
+                                    <Image src={logoSrc} h={isSmallScreen ? "30px" : "40px"} />
+                                </Link>
 
                                 <Flex alignItems="center">
                                     {
@@ -94,7 +95,11 @@ export default function Navbar() {
                                                     <div>{error.message}</div>
                                                 ) : (
                                                     <>
-                                                        <Box>data kosong</Box>
+                                                        <Flex w='430px'>
+                                                            <Flex m='0 auto'>
+                                                                <Box>...</Box>
+                                                            </Flex>
+                                                        </Flex>
                                                     </>
                                                 )}
                                             </Box>
