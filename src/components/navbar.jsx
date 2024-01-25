@@ -12,7 +12,7 @@ import ToggleDarkMode from './toggledarkmode';
 import CategoryMenu from './categoryMenu';
 import ShoppingCart from './shoppingCart';
 import NavDrawer from './navbarDrawer';
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function Navbar() {
     const [data, setData] = useState(null);
@@ -20,7 +20,7 @@ export default function Navbar() {
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [isVertical, setIsVertical] = useState(false);
     const userToken = localStorage.getItem("userToken");
-
+    const location = useLocation();
     const { colorMode } = useColorMode();
     const logoSrc = colorMode === 'light' ? logo_light : logo_dark;
 
@@ -36,6 +36,10 @@ export default function Navbar() {
 
         fetchData();
     }, []);
+
+    const isLinkActive = (targetRoute) => {
+        return location.pathname === targetRoute;
+    };
 
     const [isNarrowScreen] = useMediaQuery("(max-width: 1450px)");
     const [isPhoneScreen] = useMediaQuery("(max-width: 1200px)")
@@ -60,7 +64,9 @@ export default function Navbar() {
                     isVertical ? (
                         <>
                             <NavDrawer categories={data} />
-                            <Image src={logoSrc} h={isSmallScreen ? "30px" : "40px"} />
+                            <Link href="/">
+                                <Image src={logoSrc} h={isSmallScreen ? "30px" : "40px"} />
+                            </Link>
                         </>
                     ) :
                         (
@@ -73,11 +79,33 @@ export default function Navbar() {
                                     {
                                         isVertical ? (
                                             <>
-                                                <CategoryMenu categories={data} />
+                                                <CategoryMenu />
                                             </>
                                         ) : (
                                             <Box as='ul' display="flex">
-                                                {data ? (
+                                                <Flex w='450px' justifyContent='space-between' ml={5}>
+                                                    <Link fontWeight='bold' href="/shop/women's%20clothing" style={{ color: isLinkActive("/shop/women's%20clothing") ? 'red' : 'inherit' }}>
+                                                        <Text fontSize={16}>
+                                                            Womens' Clothing
+                                                        </Text>
+                                                    </Link>
+                                                    <Link fontWeight='bold' href="/shop/men's%20clothing" style={{ color: isLinkActive("/shop/men's%20clothing") ? 'red' : 'inherit' }}>
+                                                        <Text fontSize={16}>
+                                                            Mens' Clothing
+                                                        </Text>
+                                                    </Link>
+                                                    <Link fontWeight='bold' href="/shop/jewelery" style={{ color: isLinkActive("/shop/jewelery") ? 'red' : 'inherit' }}>
+                                                        <Text fontSize={16}>
+                                                            Jewelery
+                                                        </Text>
+                                                    </Link>
+                                                    <Link fontWeight='bold' href="/shop/electronics" style={{ color: isLinkActive("/shop/electronics") ? 'red' : 'inherit' }}>
+                                                        <Text fontSize={16}>
+                                                            Electronics
+                                                        </Text>
+                                                    </Link>
+                                                </Flex>
+                                                {/* {data ? (
                                                     <>
                                                         <Flex w='430px' justifyContent='space-between' ml={5}>
                                                             {
@@ -101,7 +129,7 @@ export default function Navbar() {
                                                             </Flex>
                                                         </Flex>
                                                     </>
-                                                )}
+                                                )} */}
                                             </Box>
                                         )
                                     }

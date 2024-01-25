@@ -1,5 +1,3 @@
-import Main from "./pages/Main";
-import ProductPage from "./pages/productPage";
 import {
   createBrowserRouter,
   RouterProvider,

@@ -12,7 +12,7 @@ export default function ItemCard(props) {
 
     return (
         <Flex
-            w={isPhoneScreen ? "250px" : "300px"} h={isPhoneScreen ? "350px" : "400px"} mx={7} flexDirection='column'
+            w={isPhoneScreen ? "250px" : "350px"} h={isPhoneScreen ? "350px" : "400px"} mx={7} flexDirection='column'
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             cursor={isHovered ? "pointer" : 'auto'}
@@ -24,7 +24,7 @@ export default function ItemCard(props) {
                 overflow='hidden' borderRadius={10}
             >
                 <Image
-                    w='auto' h='100%' src={props.data.image} objectFit='cover'
+                    w='auto' h='100%' src={props.data.image} objectFit='scale-down'
                     transition="transform 0.3s ease-in-out"
                     transform={isHovered ? "scale(1.05)" : "scale(1)"}
                 />

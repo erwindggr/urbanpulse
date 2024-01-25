@@ -4,11 +4,13 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
+import { usePhoneScreenMediaQuery } from "../mediaQuery/mediaQueries";
 
 export default function ProductPage() {
     const [productData, setProductData] = useState(null);
     const [error, setError] = useState(null);
     const { id } = useParams();
+    const [isPhoneScreen] = usePhoneScreenMediaQuery();
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -29,7 +31,7 @@ export default function ProductPage() {
         }
 
         const descriptionLines = productData.description.split(',').map((line, index) => (
-            <Text key={index}>{line.trim()}</Text>
+            <Text fontSize={isPhoneScreen ? 'sm' : 'md'} key={index}>{line.trim()}</Text>
         ));
 
         return descriptionLines;
@@ -39,15 +41,15 @@ export default function ProductPage() {
         <Flex flexDir='column' minH='100vh'>
             <Navbar />
 
-            <Flex w='65%' h='700px' m='0 auto' justifyContent='space-between' my={20}>
+            <Flex w='65%' minH='30vh'  m='0 auto' justifyContent='space-between' my={20}>
                 {
                     productData ? (
-                        <Flex w='full' justifyContent='space-between'>
-                            <Flex w='40%'>
+                        <Flex w='full' justifyContent='space-between' flexDir={isPhoneScreen ? 'column' : 'row'}>
+                            <Flex w={isPhoneScreen ? '100%' : '40%'}>
                                 <Image w='full' h='auto' objectFit='contain' src={productData.image} />
                             </Flex>
 
-                            <Flex w='50%' p={10} flexDir='column' justifyContent='space-between'>
+                            <Flex w={isPhoneScreen ? '100%' : '50%'} p={isPhoneScreen ? 'none' : 10} mt={isPhoneScreen ? 10 : 0} flexDir='column' justifyContent='space-between'>
                                 <Box>
                                     <Heading size='sm'>
                                         {productData.title}
@@ -66,7 +68,7 @@ export default function ProductPage() {
                                     </Flex>
                                 </Box>
 
-                                <Flex mt={4} align="center" flexDir='column'>
+                                <Flex mt={isPhoneScreen ? 8 : 0} align="center" flexDir='column'>
 
                                     <Button m='0 auto' colorScheme='teal' variant='outline' w='full'>
                                         Add to cart

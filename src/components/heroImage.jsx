@@ -8,7 +8,7 @@ import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
 import BigButton from "./bigButton";
 
-const animation = { duration: 3000, easing: (t) => t }
+const animation = { duration: 1500, easing: (t) => t }
 
 export default function HeroImage() {
     const [currentSlide, setCurrentSlide] = useState(0)
