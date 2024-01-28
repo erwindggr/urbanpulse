@@ -5,10 +5,14 @@ import { useParams } from "react-router-dom";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import { usePhoneScreenMediaQuery } from "../mediaQuery/mediaQueries";
+// import store from "../redux/Stores/CartStore";
+import { store } from "../redux/Stores/CartStore";
+import { addToCart } from "../redux/Action/CartAction";
 
 export default function ProductPage() {
     const [productData, setProductData] = useState(null);
     const [error, setError] = useState(null);
+    const toast = useToast();
     const { id } = useParams();
     const [isPhoneScreen] = usePhoneScreenMediaQuery();
 
@@ -37,11 +41,32 @@ export default function ProductPage() {
         return descriptionLines;
     };
 
+    const handleAddToCart = () => {
+        const userToken = localStorage.getItem("userToken");
+
+        if (!userToken) {
+            toast({
+                title: "Please login first",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+            });
+            return;
+        }
+        store.dispatch(addToCart(productData));
+        toast({
+            title: "Successfully added to cart",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+        });
+    };
+
     return (
         <Flex flexDir='column' minH='100vh'>
             <Navbar />
 
-            <Flex w='65%' minH='30vh'  m='0 auto' justifyContent='space-between' my={20}>
+            <Flex w='65%' minH='30vh' m='0 auto' justifyContent='space-between' my={20}>
                 {
                     productData ? (
                         <Flex w='full' justifyContent='space-between' flexDir={isPhoneScreen ? 'column' : 'row'}>
@@ -70,7 +95,9 @@ export default function ProductPage() {
 
                                 <Flex mt={isPhoneScreen ? 8 : 0} align="center" flexDir='column'>
 
-                                    <Button m='0 auto' colorScheme='teal' variant='outline' w='full'>
+                                    <Button m='0 auto' colorScheme='teal' variant='outline' w='full'
+                                        onClick={handleAddToCart}
+                                    >
                                         Add to cart
                                     </Button>
                                 </Flex>

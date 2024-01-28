@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import {
-    useColorModeValue, useColorMode, Box, Avatar, Image,
+    Badge, useColorMode, Box, Avatar, Image,
     Flex, Link, Menu, MenuButton, MenuList, MenuItem, Text,
     Button
 } from "@chakra-ui/react";
@@ -13,6 +13,8 @@ import CategoryMenu from './categoryMenu';
 import ShoppingCart from './shoppingCart';
 import NavDrawer from './navbarDrawer';
 import { useLocation } from "react-router-dom";
+import { store } from '../redux/Stores/CartStore';
+import { clearCart } from '../redux/Action/CartAction';
 
 export default function Navbar() {
     const [data, setData] = useState(null);
@@ -22,7 +24,42 @@ export default function Navbar() {
     const userToken = localStorage.getItem("userToken");
     const location = useLocation();
     const { colorMode } = useColorMode();
+    const [badgeScale, setBadgeScale] = useState(1);
+    const [prevCartItemCount, setPrevCartItemCount] = useState(0);
     const logoSrc = colorMode === 'light' ? logo_light : logo_dark;
+    // const cartItemCount = store.getState();
+    const [cartItemCount, setCartItemCount] = useState(store.getState().cart.cart.length);
+
+    useEffect(() => {
+        // Check if the cartItemCount has changed
+        if (cartItemCount !== prevCartItemCount) {
+            // Increase the scale to make the badge bigger
+            setBadgeScale(1.5);
+
+            // Set a timeout to return the badge to normal size after a short delay (e.g., 500ms)
+            const timeoutId = setTimeout(() => {
+                setBadgeScale(1);
+            }, 500);
+
+            // Update the previous cartItemCount value
+            setPrevCartItemCount(cartItemCount);
+
+            // Clean up the timeout to avoid memory leaks
+            return () => clearTimeout(timeoutId);
+        }
+    }, [cartItemCount, prevCartItemCount]);
+
+    useEffect(() => {
+        const unsubscribe = store.subscribe(() => {
+            // Update the local state when the Redux store changes
+            setCartItemCount(store.getState().cart.cart.length);
+        });
+
+        // Clean up the subscription when the component unmounts
+        return () => {
+            unsubscribe();
+        };
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -54,6 +91,7 @@ export default function Navbar() {
 
     const logout = () => {
         localStorage.removeItem("userToken");
+        store.dispatch(clearCart());
         window.location.reload();
     };
 
@@ -105,31 +143,6 @@ export default function Navbar() {
                                                         </Text>
                                                     </Link>
                                                 </Flex>
-                                                {/* {data ? (
-                                                    <>
-                                                        <Flex w='430px' justifyContent='space-between' ml={5}>
-                                                            {
-                                                                data.slice().reverse().map((category, index) => (
-                                                                    <Link key={index} fontWeight='bold'>
-                                                                        <Text fontSize={16}>
-                                                                            {category.charAt(0).toUpperCase() + category.slice(1)}
-                                                                        </Text>
-                                                                    </Link>
-                                                                ))
-                                                            }
-                                                        </Flex>
-                                                    </>
-                                                ) : error ? (
-                                                    <div>{error.message}</div>
-                                                ) : (
-                                                    <>
-                                                        <Flex w='430px'>
-                                                            <Flex m='0 auto'>
-                                                                <Box>...</Box>
-                                                            </Flex>
-                                                        </Flex>
-                                                    </>
-                                                )} */}
                                             </Box>
                                         )
                                     }
@@ -141,7 +154,15 @@ export default function Navbar() {
 
                 <Flex w='150px' justifyContent='space-between' alignItems='center'>
                     <ShoppingCart />
-
+                    {
+                        cartItemCount > 0 ? (
+                            <Badge borderRadius="full" bg="teal.500" color="white" p="1"
+                                style={{ transform: `scale(${badgeScale})`, transition: 'transform 0.5s' }}
+                            >
+                                {cartItemCount}
+                            </Badge>
+                        ) : (<></>)
+                    }
 
                     {
                         userToken ? (
@@ -162,16 +183,6 @@ export default function Navbar() {
                                 <Link href="/login" >Login</Link>
                             </Button>
                         )}
-
-                    {/* <Menu>
-                        <MenuButton as={Avatar} bg='gray' boxSize={isSmallScreen ? '25px' : '35px'} />
-                        <MenuList>
-                            <MenuItem>Profile</MenuItem>
-                            <MenuItem>Setting</MenuItem>
-                            <MenuItem>Log Out</MenuItem>
-                        </MenuList>
-                    </Menu> */}
-
                     <ToggleDarkMode />
                 </Flex>
             </Flex>

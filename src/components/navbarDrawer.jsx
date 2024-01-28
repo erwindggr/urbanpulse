@@ -56,8 +56,8 @@ export default function NavDrawer(props) {
                         <Flex flexDirection='column' mt={5}>
                             {
                                 data?.slice().reverse().map((category, index) => (
-                                    <Box>
-                                        <Link key={index}>
+                                    <Box key={index}>
+                                        <Link >
                                             <Text fontWeight='bold' fontSize='xl' my={3}>
                                                 {category.charAt(0).toUpperCase() + category.slice(1)}
                                             </Text>

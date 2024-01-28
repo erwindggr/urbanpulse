@@ -11,7 +11,7 @@ export default function Section(props) {
         loop: isPhoneScreen ? true : false,
         mode: "free-snap",
         slides: {
-            perView: props.data > 4 ? isPhoneScreen ? 5 : 4 : 4,
+            perView: props.data > 4 ? isPhoneScreen ? 5 : 3 : 3,
             spacing: 10,
         },
     })
