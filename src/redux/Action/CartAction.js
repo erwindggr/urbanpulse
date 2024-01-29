@@ -17,3 +17,17 @@ export const clearCart = () => {
         type: 'CLEAR_CART',
     };
 };
+
+export const incrementCartItem = (productId) => {
+    return {
+        type: 'INCREMENT_CART_ITEM',
+        payload: productId
+    };
+};
+
+export const decrementCartItem = (productId) => {
+    return {
+        type: 'DECREMENT_CART_ITEM',
+        payload: productId
+    };
+};

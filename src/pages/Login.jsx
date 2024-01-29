@@ -83,8 +83,6 @@ export default function Login() {
                                 align={"start"}
                                 justify={"space-between"}
                             >
-                                <Checkbox>Remember me</Checkbox>
-                                <Text color={"blue.400"}>Forgot password?</Text>
                             </Stack>
                             <Button
                                 bg={"blue.400"}

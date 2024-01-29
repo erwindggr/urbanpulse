@@ -9,12 +9,12 @@ import {
     useDisclosure, Image
 } from "@chakra-ui/react";
 import { Flex, Heading, Text, Divider } from "@chakra-ui/react";
+import { ChevronLeftIcon, ChevronRightIcon, SmallCloseIcon } from '@chakra-ui/icons'
 import { useMediaQuery } from "@chakra-ui/react";
 import { useState, useEffect, useRef } from "react";
 import { LuShoppingCart } from "react-icons/lu";
-// import store from "../redux/Stores/CartStore";
 import { store } from "../redux/Stores/CartStore";
-import { removeFromCart } from "../redux/Action/CartAction";
+import { removeFromCart, incrementCartItem, decrementCartItem } from "../redux/Action/CartAction";
 
 export default function ShoppingCart(props) {
     const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -27,6 +27,8 @@ export default function ShoppingCart(props) {
 
     useEffect(() => {
         setLocalCart(cartItems);
+        handleDecrement();
+        handleIncrement();
     }, [cartItems]);
 
     useEffect(() => {
@@ -39,6 +41,20 @@ export default function ShoppingCart(props) {
 
         // Update local state to trigger re-render of the cart items
         setLocalCart(prevCart => prevCart.filter(item => item.id !== itemId));
+    };
+
+    const handleIncrement = (productId) => {
+        store.dispatch(incrementCartItem(productId));
+    };
+
+    const handleDecrement = (productId) => {
+        store.dispatch(decrementCartItem(productId));
+    };
+
+    const calculateTotal = () => {
+        return cart.cart.cart.reduce((total, item) => {
+            return total + item.quantity * item.price;
+        }, 0);
     };
 
     return (
@@ -70,36 +86,56 @@ export default function ShoppingCart(props) {
                     <Divider />
 
                     <DrawerBody>
-                        <Flex w='full' h='1000px' bg='darkgrey' flexDir='column' justifyContent='space-between'>
-                            {cart.cart.cart.map(item => (
-                                <Flex h='100px' w='full' key={item.id} justifyContent='space-between' alignItems='center' mb={2}>
-                                    <Flex >
-                                        <Image src={item.image} w='100px' h='100px' />
-                                        <Text>
-                                            {
-                                                item.title.length > 40 ? 
-                                                `${item.title.slice(0, 40)}...`
+                        {/* <Flex w='full' bg='darkgrey' flexDir='column' justifyContent='space-between'> */}
+                        {cart.cart.cart.map(item => (
+                            <Flex h='120px' w='full' key={item.id} justifyContent='space-between' alignItems='center' mb={2}>
+                                <Image bg='white' src={item.image} w='20%' h='90px' objectFit='scale-down' ml={2} borderRadius='10' />
+                                <Flex w='60%' flexDir='column'>
+                                    <Text>
+                                        {
+                                            item.title.length > 25 ?
+                                                `${item.title.slice(0, 25)}...`
                                                 :
                                                 `${item.title}`
-                                            }
-                                        </Text>
-                                        {/* <Text>{truncatedTitle}</Text> */}
+                                        }
+                                    </Text>
+                                    <Text>{item.price}</Text>
+                                    <Flex justifyContent='flex-end'>
+                                        <Flex border='1px solid black' borderRadius={5} p={1}>
+                                            <IconButton size='xs' borderRadius='full' onClick={() => handleDecrement(item.id)} icon={<ChevronLeftIcon />} />
+                                            <Text mx={3}>
+                                                {item.quantity}
+                                            </Text>
+                                            <IconButton size='xs' borderRadius='full' onClick={() => handleIncrement(item.id)} icon={<ChevronRightIcon />} />
+                                        </Flex>
                                     </Flex>
-                                    <Button onClick={() => handleRemoveAndRefresh(item.id)} >X</Button>
                                 </Flex>
-                            ))}
-
-                            <Flex w='100%' h='400px' bg='red'>
-
+                                <IconButton mr={2} size='xs' icon={<SmallCloseIcon/>} onClick={() => handleRemoveAndRefresh(item.id)} borderRadius='full' bg='red' color='white' />
                             </Flex>
-                        </Flex>
+                        ))}
                     </DrawerBody>
 
                     <DrawerFooter>
-                        <Button variant='outline' mr={3} onClick={onClose}>
-                            Cancel
-                        </Button>
-                        <Button colorScheme='blue'>Save</Button>
+                        <Flex w='full' flexDir='column'>
+                            <Flex w='full' justifyContent='space-between' py={2}>
+                                <Text>Total</Text>
+
+                                {
+                                    calculateTotal() == 0 ? (
+                                        <></>
+                                    ) : (
+                                        <Text fontWeight='bold'>
+                                            Total : {calculateTotal()}
+                                        </Text>
+                                    )
+                                }
+
+                            </Flex>
+
+                            <Button colorScheme='blue' w='full' my={5}>
+                                Checkout
+                            </Button>
+                        </Flex>
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
