@@ -53,19 +53,63 @@ export default function NavDrawer(props) {
                     </DrawerHeader>
 
                     <DrawerBody>
-                        <Flex flexDirection='column' mt={5}>
-                            {
-                                data?.slice().reverse().map((category, index) => (
-                                    <Box key={index}>
-                                        <Link >
-                                            <Text fontWeight='bold' fontSize='xl' my={3}>
-                                                {category.charAt(0).toUpperCase() + category.slice(1)}
-                                            </Text>
-                                        </Link>
-                                        <Divider />
-                                    </Box>
-                                ))
-                            }
+                        <Flex flexDirection='column' mt={5} fontFamily="'Red Hat Display', sans-serif">
+                            <Box>
+                                <Link
+                                    fontWeight='600' href="/shop/women's%20clothing"
+                                    style={{
+                                        textDecoration: 'none',
+                                        cursor: 'pointer'
+                                    }}
+                                >
+                                    <Text fontWeight='bold' fontSize='xl' my={3} color='#2D9596' >
+                                        Women
+                                    </Text>
+                                </Link>
+                                <Divider />
+                            </Box>
+                            <Box>
+                                <Link
+                                    fontWeight='600' href="/shop/men's%20clothing"
+                                    style={{
+                                        textDecoration: 'none',
+                                        cursor: 'pointer'
+                                    }}
+                                >
+                                    <Text fontWeight='bold' fontSize='xl' my={3} color='#2D9596'>
+                                        Men
+                                    </Text>
+                                </Link>
+                                <Divider />
+                            </Box>
+                            <Box>
+                                <Link
+                                    fontWeight='600' href="/shop/jewelery"
+                                    style={{
+                                        textDecoration: 'none',
+                                        cursor: 'pointer'
+                                    }}
+                                >
+                                    <Text fontWeight='bold' fontSize='xl' my={3} color='#2D9596'>
+                                        Jewelery
+                                    </Text>
+                                </Link>
+                                <Divider />
+                            </Box>
+                            <Box>
+                                <Link
+                                    fontWeight='600' href="/shop/electronics"
+                                    style={{
+                                        textDecoration: 'none',
+                                        cursor: 'pointer'
+                                    }}
+                                >
+                                    <Text fontWeight='bold' fontSize='xl' my={3} color='#2D9596'>
+                                        Electronics
+                                    </Text>
+                                </Link>
+                                <Divider />
+                            </Box>
                         </Flex>
                     </DrawerBody>
                 </DrawerContent>

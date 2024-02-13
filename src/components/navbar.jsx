@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import {
     Badge, useColorMode, Box, Avatar, Image,
     Flex, Link, Menu, MenuButton, MenuList, MenuItem, Text,
-    Button
+    Button,
+    useToken
 } from "@chakra-ui/react";
 import logo_dark from "../image/logo_dark.png";
 import logo_light from "../image/logo_light.png";
@@ -13,53 +14,20 @@ import CategoryMenu from './categoryMenu';
 import ShoppingCart from './shoppingCart';
 import NavDrawer from './navbarDrawer';
 import { useLocation } from "react-router-dom";
-import { store } from '../redux/Stores/CartStore';
-import { clearCart } from '../redux/Action/CartAction';
+import { CartContext } from '../context/cartContext';
 
 export default function Navbar() {
+    const { cart } = useContext(CartContext);
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [isVertical, setIsVertical] = useState(false);
     const userToken = localStorage.getItem("userToken");
+    const userData = localStorage.getItem("userData");
+    const userDataParsed = JSON.parse(userData);
     const location = useLocation();
     const { colorMode } = useColorMode();
-    const [badgeScale, setBadgeScale] = useState(1);
-    const [prevCartItemCount, setPrevCartItemCount] = useState(0);
     const logoSrc = colorMode === 'light' ? logo_light : logo_dark;
-    // const cartItemCount = store.getState();
-    const [cartItemCount, setCartItemCount] = useState(store.getState().cart.cart.length);
-
-    useEffect(() => {
-        // Check if the cartItemCount has changed
-        if (cartItemCount !== prevCartItemCount) {
-            // Increase the scale to make the badge bigger
-            setBadgeScale(1.5);
-
-            // Set a timeout to return the badge to normal size after a short delay (e.g., 500ms)
-            const timeoutId = setTimeout(() => {
-                setBadgeScale(1);
-            }, 500);
-
-            // Update the previous cartItemCount value
-            setPrevCartItemCount(cartItemCount);
-
-            // Clean up the timeout to avoid memory leaks
-            return () => clearTimeout(timeoutId);
-        }
-    }, [cartItemCount, prevCartItemCount]);
-
-    useEffect(() => {
-        const unsubscribe = store.subscribe(() => {
-            // Update the local state when the Redux store changes
-            setCartItemCount(store.getState().cart.cart.length);
-        });
-
-        // Clean up the subscription when the component unmounts
-        return () => {
-            unsubscribe();
-        };
-    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -91,13 +59,33 @@ export default function Navbar() {
 
     const logout = () => {
         localStorage.removeItem("userToken");
-        store.dispatch(clearCart());
+        localStorage.removeItem("userData");
         window.location.reload();
+        window.location.href = "/";
+    };
+
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     };
 
     return (
-        <Box w='100%' h={isSmallScreen ? "60px" : "70px"} >
-            <Flex w={isVertical ? "95%" : "90%"} h='100%' m='0 auto' justifyContent='space-between' alignItems='center'>
+        <Flex w='100%' flexDir='column'>
+            {
+                userToken ? (
+                    <Flex w='100%' h='30px' bg='#2D9596' justifyContent='center' alignItems='center'>
+                        <Text color='white' fontFamily="'Lexend', sans-serif" fontWeight={200}>
+                            Welcome, {capitalizeFirstLetter(userDataParsed.name.firstname)}{" "}
+                            {capitalizeFirstLetter(userDataParsed.name.lastname)}
+                        </Text>
+                    </Flex>
+                ) :
+                    (
+                        <>
+                        </>
+                    )
+            }
+
+            <Flex w='100%' px={isVertical ? 5 : 10} m='0 auto' justifyContent='space-between' alignItems='center' py={5} bg='#f7f7f5'>
                 {
                     isVertical ? (
                         <>
@@ -121,24 +109,47 @@ export default function Navbar() {
                                             </>
                                         ) : (
                                             <Box as='ul' display="flex">
-                                                <Flex w='450px' justifyContent='space-between' ml={5}>
-                                                    <Link fontWeight='bold' href="/shop/women's%20clothing" style={{ color: isLinkActive("/shop/women's%20clothing") ? 'red' : 'inherit' }}>
-                                                        <Text fontSize={16}>
-                                                            Womens' Clothing
+                                                <Flex ml={5}>
+                                                    <Link
+                                                        fontWeight='600' href="/shop/women's%20clothing"
+                                                        style={{
+                                                            color: isLinkActive("/shop/women's%20clothing") ? '#2D9596' : 'inherit',
+                                                            fontWeight: isLinkActive("/shop/women's%20clothing") ? 'bold' : 'none',
+                                                            textDecoration: 'none',
+                                                            cursor: 'pointer'
+                                                        }}
+                                                    >
+                                                        <Text fontSize={20} mr={5} fontFamily="'Red Hat Display', sans-serif">
+                                                            Women
                                                         </Text>
                                                     </Link>
-                                                    <Link fontWeight='bold' href="/shop/men's%20clothing" style={{ color: isLinkActive("/shop/men's%20clothing") ? 'red' : 'inherit' }}>
-                                                        <Text fontSize={16}>
-                                                            Mens' Clothing
+                                                    <Link fontWeight='600' href="/shop/men's%20clothing" style={{
+                                                        color: isLinkActive("/shop/men's%20clothing") ? '#2D9596' : 'inherit',
+                                                        fontWeight: isLinkActive("/shop/men's%20clothing") ? 'bold' : 'none',
+                                                        textDecoration: 'none',
+                                                        cursor: 'pointer'
+                                                    }}>
+                                                        <Text fontSize={20} mr={5} fontFamily="'Red Hat Display', sans-serif">
+                                                            Men
                                                         </Text>
                                                     </Link>
-                                                    <Link fontWeight='bold' href="/shop/jewelery" style={{ color: isLinkActive("/shop/jewelery") ? 'red' : 'inherit' }}>
-                                                        <Text fontSize={16}>
+                                                    <Link fontWeight='600' href="/shop/jewelery" style={{
+                                                        color: isLinkActive("/shop/jewelery") ? '#2D9596' : 'inherit',
+                                                        fontWeight: isLinkActive("/shop/jewelery") ? 'bold' : 'none',
+                                                        textDecoration: 'none',
+                                                        cursor: 'pointer'
+                                                    }}>
+                                                        <Text fontSize={20} mr={5} fontFamily="'Red Hat Display', sans-serif">
                                                             Jewelery
                                                         </Text>
                                                     </Link>
-                                                    <Link fontWeight='bold' href="/shop/electronics" style={{ color: isLinkActive("/shop/electronics") ? 'red' : 'inherit' }}>
-                                                        <Text fontSize={16}>
+                                                    <Link fontWeight='600' href="/shop/electronics" style={{
+                                                        color: isLinkActive("/shop/electronics") ? '#2D9596' : 'inherit',
+                                                        fontWeight: isLinkActive("/shop/electronics") ? 'bold' : 'none',
+                                                        textDecoration: 'none',
+                                                        cursor: 'pointer'
+                                                    }}>
+                                                        <Text fontSize={20} fontFamily="'Red Hat Display', sans-serif">
                                                             Electronics
                                                         </Text>
                                                     </Link>
@@ -152,40 +163,61 @@ export default function Navbar() {
                 }
 
 
-                <Flex w='150px' justifyContent='space-between' alignItems='center'>
-                    <ShoppingCart />
-                    {
-                        cartItemCount > 0 ? (
-                            <Badge borderRadius="full" bg="teal.500" color="white" p="1"
-                                style={{ transform: `scale(${badgeScale})`, transition: 'transform 0.5s' }}
-                            >
-                                {cartItemCount}
-                            </Badge>
-                        ) : (<></>)
-                    }
-
+                <Flex justifyContent='space-between' alignItems='center'>
                     {
                         userToken ? (
                             <Menu>
                                 <MenuButton
+                                    mr={isPhoneScreen ? '3' : '5'}
                                     as={Avatar}
-                                    bg="gray"
+                                    bg="gray.300"
                                     boxSize={isSmallScreen ? "25px" : "35px"}
+                                    style={{
+                                        textDecoration: 'none',
+                                        cursor: 'pointer'
+                                    }}
                                 />
                                 <MenuList>
-                                    <MenuItem>Profile</MenuItem>
-                                    <MenuItem>Setting</MenuItem>
-                                    <MenuItem onClick={logout}>Log Out</MenuItem>
+                                    <MenuItem _hover={{ bg: "#2D9596", color: "white" }} onClick={logout}>Log Out</MenuItem>
                                 </MenuList>
                             </Menu>
                         ) : (
-                            <Button as={Link} bg='black' color="white">
-                                <Link href="/login" >Login</Link>
-                            </Button>
-                        )}
-                    <ToggleDarkMode />
+                            <>
+                                <Link href="/login" mr={5} style={{
+                                    textDecoration: 'none',
+                                    cursor: 'pointer'
+                                }}>
+                                    <Text fontSize={15} fontWeight={600} fontFamily="'Lexend', sans-serif">Sign in</Text>
+                                </Link>
+                            </>
+                        )
+                    }
+                    <Flex position='relative'>
+                        <ShoppingCart />
+                        {
+                            cart.length > 0 ? (
+                                <Badge
+                                    borderRadius="full"
+                                    bg="teal.500"
+                                    color="white"
+                                    py="1" px="2"
+                                    position='absolute'
+                                    left={5}
+                                    top={-2}
+                                >
+                                    <Text fontSize='10px'>
+                                        {
+                                            cart.reduce((total, item) => {
+                                                return total + item.amount;
+                                            }, 0)
+                                        }
+                                    </Text>
+                                </Badge>
+                            ) : (<></>)
+                        }
+                    </Flex>
                 </Flex>
             </Flex>
-        </Box >
+        </Flex >
     );
 }

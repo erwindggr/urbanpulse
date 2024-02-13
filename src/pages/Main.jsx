@@ -1,10 +1,10 @@
 import Navbar from "../components/navbar";
 import HeroImage from "../components/heroImage";
 import TagLine from "../components/tagline";
-import { Image, Grid, GridItem, Flex, Heading, Button } from "@chakra-ui/react";
+import { Image, Grid, GridItem, Flex, Heading, Button, Text } from "@chakra-ui/react";
 import Section from "../components/section";
-import s1 from "../image/Section-Man.jpg";
-import s2 from "../image/section-woman.jpg";
+import s1 from "../image/S2.jpg";
+import s2 from "../image/S1.jpg";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import "keen-slider/keen-slider.min.css";
@@ -14,6 +14,7 @@ import About from "../components/about";
 import Footer from "../components/footer";
 import content01 from "../image/content-01.jpg";
 import content02 from "../image/content-02.jpg";
+import BigButton from "../components/bigButton";
 
 export default function Main() {
     const [productData, setProductData] = useState(null);
@@ -63,10 +64,22 @@ export default function Main() {
                 flexDirection={isPhoneScreen ? "column" : "row"}
             >
                 <GridItem w={isPhoneScreen ? '100%' : '45%'} bg='blue.500' >
-                    <Image src={s2} w='100%' />
+                    <Flex w='100%' pos='relative'>
+                        <Image src={s2} w='100%' />
+                        <Flex mb={20} h='130px' flexDir='column' pos='absolute' bottom={2} w='100%' justifyContent='space-between' alignItems='center'>
+                            <Heading size='2xl' color='white' mb={5} fontFamily="'Red Hat Display', sans-serif">Women's</Heading>
+                            <BigButton text={"Explore"} link={"/shop/women's%20clothing"} />
+                        </Flex>
+                    </Flex>
                 </GridItem>
                 <GridItem w={isPhoneScreen ? '100%' : '45%'} bg='blue.500' >
-                    <Image src={s1} w='100%' />
+                    <Flex w='100%' pos='relative'>
+                        <Image src={s1} w='100%' />
+                        <Flex mb={20} h='130px' flexDir='column' pos='absolute' bottom={2} w='100%' justifyContent='space-between' alignItems='center'>
+                            <Heading size='2xl' color='white' mb={5} fontFamily="'Red Hat Display', sans-serif">Men's</Heading>
+                            <BigButton text={"Explore"} link={"/shop/men's%20clothing"} />
+                        </Flex>
+                    </Flex>
                 </GridItem>
             </Grid>
             <Flex w='100%' overflow='hidden'>
@@ -74,19 +87,21 @@ export default function Main() {
             </Flex>
 
             <Content
-                source={content01} title='beatiful jeans'
-                message='hello world' leftPercentage={isPhoneScreen ? '40%' : '80%'}
-                topPercentage='10%'
+                source={content01} title='Experience Unmatched Quality in Every Thread'
+                message=
+                'Discover Superior Fabrics Crafted for Excellence' 
+                rightPercentage={isPhoneScreen ? '40%' : '75%'}
+                topPercentage={isPhoneScreen ? '10%' : '20%'}
             />
 
-            <Flex w='100%' overflow='hidden'>
+            {/* <Flex w='100%' overflow='hidden'>
                 <Section data={productData2} productName={"Men's Fashion"} buttonTitle={"Shop Men's Fashion"} />
             </Flex>
             <Content
                 source={content02} title='jewelery cool!'
                 message='hehehehe' leftPercentage='10%'
                 topPercentage='70%'
-            />
+            /> */}
             <About />
             <Footer />
         </>

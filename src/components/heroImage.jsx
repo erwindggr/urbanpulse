@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Box, Flex, Heading, Text, Image, Button } from "@chakra-ui/react";
 import '../css/heroImage.css';
 import heroImg1 from "../image/horizontal-01.jpg";
-import heroImg2 from "../image/horizontal-02.jpg";
+import heroImg2 from "../image/hero2.jpg";
 import heroImg3 from "../image/horizontal-03.jpg";
 import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
@@ -61,7 +61,7 @@ export default function HeroImage() {
             <Box position='relative' >
                 <Flex ref={sliderRef} className="keen-slider">
                     <Box className="keen-slider__slide">
-                        <Image w='100%' h='auto' minH='550px' src={heroImg1} objectFit='cover' />
+                        <Image w='100%' h='auto' minH='550px' src={heroImg1} objectFit='cover' objectPosition='center' />
                         <Box
                             position='absolute'
                             top='80%'
@@ -69,7 +69,7 @@ export default function HeroImage() {
                             transform='translate(-50%, -50%)'
                             textAlign='center'
                         >
-                            <BigButton text={"Shop Men's Clothing"} />
+                            <BigButton text={"Shop Men's Clothing"} link={"/shop/men's%20clothing"} />
                         </Box>
                     </Box>
                     <Box className="keen-slider__slide">
@@ -81,11 +81,11 @@ export default function HeroImage() {
                             transform='translate(-50%, -50%)'
                             textAlign='center'
                         >
-                            <BigButton text={"Shop Jewelery"} />
+                            <BigButton text={"Shop Jewelery"} link={"/shop/jewelery"} />
                         </Box>
                     </Box>
                     <Box className="keen-slider__slide">
-                        <Image w='100%' h='auto' minH='550px' src={heroImg3} objectFit='cover' objectPosition='right' />
+                        <Image w='100%' h='auto' minH='550px' src={heroImg3} objectFit='cover' objectPosition='center' />
                         <Box
                             position='absolute'
                             top='80%'
@@ -93,7 +93,7 @@ export default function HeroImage() {
                             transform='translate(-50%, -50%)'
                             textAlign='center'
                         >
-                            <BigButton text={"Shop Women's Clothing"} />
+                            <BigButton text={"Shop Women's Clothing"} link={"/shop/women's%20clothing"} />
                         </Box>
                     </Box>
                 </Flex>
@@ -110,7 +110,7 @@ export default function HeroImage() {
                         ].map((idx) => {
                             return (
                                 <Button
-                                    border='2px solid gray' size='xs'
+                                    border='2px solid #2D9596' size='xs'
                                     bg='none' borderRadius='50%'
                                     padding='5px' cursor='pointer'
                                     key={idx}

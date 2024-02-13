@@ -1,20 +1,21 @@
-import { Flex, Text, Image, Heading, Badge, Box, Button, useToast } from "@chakra-ui/react";
+import { Flex, Text, Image, Heading, Badge, Box, Button, useToast, useConst } from "@chakra-ui/react";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
-import { usePhoneScreenMediaQuery } from "../mediaQuery/mediaQueries";
+import { usePhoneScreenMediaQuery, useTabletScreenMediaQuery } from "../mediaQuery/mediaQueries";
 // import store from "../redux/Stores/CartStore";
-import { store } from "../redux/Stores/CartStore";
-import { addToCart } from "../redux/Action/CartAction";
+import { CartContext } from "../context/cartContext";
 
 export default function ProductPage() {
+    const { addToCart } = useContext(CartContext)
     const [productData, setProductData] = useState(null);
     const [error, setError] = useState(null);
     const toast = useToast();
     const { id } = useParams();
     const [isPhoneScreen] = usePhoneScreenMediaQuery();
+    const [isTabletScreen] = useTabletScreenMediaQuery();
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -35,32 +36,32 @@ export default function ProductPage() {
         }
 
         const descriptionLines = productData.description.split(',').map((line, index) => (
-            <Text fontSize={isPhoneScreen ? 'sm' : 'md'} key={index}>{line.trim()}</Text>
+            <Text fontSize='sm' key={index}>{line.trim()}</Text>
         ));
 
         return descriptionLines;
     };
 
-    const handleAddToCart = () => {
-        const userToken = localStorage.getItem("userToken");
+    // const handleAddToCart = () => {
+    //     const userToken = localStorage.getItem("userToken");
 
-        if (!userToken) {
-            toast({
-                title: "Please login first",
-                status: "error",
-                duration: 5000,
-                isClosable: true,
-            });
-            return;
-        }
-        store.dispatch(addToCart(productData));
-        toast({
-            title: "Successfully added to cart",
-            status: "success",
-            duration: 3000,
-            isClosable: true,
-        });
-    };
+    //     if (!userToken) {
+    //         toast({
+    //             title: "Please login first",
+    //             status: "error",
+    //             duration: 5000,
+    //             isClosable: true,
+    //         });
+    //         return;
+    //     }
+    //     store.dispatch(addToCart(productData));
+    //     toast({
+    //         title: "Successfully added to cart",
+    //         status: "success",
+    //         duration: 3000,
+    //         isClosable: true,
+    //     });
+    // };
 
     return (
         <Flex flexDir='column' minH='100vh'>
@@ -71,12 +72,12 @@ export default function ProductPage() {
                     productData ? (
                         <Flex w='full' justifyContent='space-between' flexDir={isPhoneScreen ? 'column' : 'row'}>
                             <Flex w={isPhoneScreen ? '100%' : '40%'}>
-                                <Image w='full' h='auto' objectFit='contain' src={productData.image} />
+                                <Image w='100%' h='500' objectFit='scale-down' src={productData.image} />
                             </Flex>
 
                             <Flex w={isPhoneScreen ? '100%' : '50%'} p={isPhoneScreen ? 'none' : 10} mt={isPhoneScreen ? 10 : 0} flexDir='column' justifyContent='space-between'>
                                 <Box>
-                                    <Heading size='sm'>
+                                    <Heading size='md'>
                                         {productData.title}
                                     </Heading>
                                     <Flex w='full' my={3}>
@@ -96,7 +97,7 @@ export default function ProductPage() {
                                 <Flex mt={isPhoneScreen ? 8 : 0} align="center" flexDir='column'>
 
                                     <Button m='0 auto' colorScheme='teal' variant='outline' w='full'
-                                        onClick={handleAddToCart}
+                                        onClick={() => addToCart(productData, productData.id)}
                                     >
                                         Add to cart
                                     </Button>

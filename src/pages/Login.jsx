@@ -12,14 +12,16 @@ import {
     Heading,
     Text,
     useColorModeValue,
-    Image
+    Image,
+    Link
 } from "@chakra-ui/react";
 import logo from "../image/logo_circle.png";
 import { useNavigate } from "react-router-dom";
+import bg from '../image/loginBG.jpg';
 
 export default function Login() {
-    const [userName, setUserName] = useState("");
-    const [password, setPassword] = useState("");
+    const [userName, setUserName] = useState("mor_2314");
+    const [password, setPassword] = useState("83r5^_");
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
@@ -29,12 +31,15 @@ export default function Login() {
                 username: userName,
                 password: password,
             });
+            const users = await axios.get("https://fakestoreapi.com/users");
 
+            const user = users.data.find(x => x.username === userName && x.password === password);
             // Assuming the response contains a token
             const token = response.data.token;
-
             // Save token to local storage
             localStorage.setItem("userToken", token);
+            localStorage.setItem("userData", JSON.stringify(user));
+            console.log(localStorage.getItem("userData"));
             navigate("/");
             // Handle any other logic, such as redirecting to another page
         } catch (error) {
@@ -46,63 +51,67 @@ export default function Login() {
 
     return (
         <Flex
-            minH={"100vh"}
-            align={"center"}
-            justify={"center"}
-            bg={useColorModeValue("gray.200", "gray.800")}
+            w='100%' minH='100vh'
+            bgImage={bg} bgPosition='center'
+            justifyContent='center' alignItems='center'
+            flexDir='column'
         >
-            <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
-                <Box
-                    bg={useColorModeValue("white", "gray.700")}
-                    boxShadow={"lg"}
-                    p={8}
-                >
-                    <Stack mb={5} align={"center"} bg="gray.300" borderRadius={50}>
-                        <Image src={logo} w="200px" />
-                    </Stack>
-                    <Stack spacing={4}>
-                        <FormControl id="email">
-                            <FormLabel>Email address</FormLabel>
-                            <Input
-                                type="email"
-                                value={userName}
-                                onChange={(e) => setUserName(e.target.value)}
-                            />
-                        </FormControl>
-                        <FormControl id="password">
-                            <FormLabel>Password</FormLabel>
-                            <Input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </FormControl>
-                        <Stack spacing={10}>
-                            <Stack
-                                direction={{ base: "column", sm: "row" }}
-                                align={"start"}
-                                justify={"space-between"}
-                            >
-                            </Stack>
-                            <Button
-                                bg={"blue.400"}
-                                color={"white"}
-                                _hover={{
-                                    bg: "blue.500",
-                                }}
-                                onClick={handleLogin}
-                            >
-                                Sign in
-                            </Button>
+            <Flex
+                w='400px' flexDir='column'
+                justifyContent='center' alignItems='center'
+                bg='white' py={20}
+            >
+                <Flex bg='#2D9596' borderRadius='full' mb={5}>
+                    <Image src={logo} w='200px' />
+                </Flex>
+                <Stack w='80%'>
+                    <FormControl id="email">
+                        <FormLabel>Email address</FormLabel>
+                        <Input
+                            type="email"
+                            value={userName}
+                            onChange={(e) => setUserName(e.target.value)}
+                        />
+                    </FormControl>
+                    <FormControl id="password">
+                        <FormLabel>Password</FormLabel>
+                        <Input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </FormControl>
+                    <Stack spacing={10}>
+                        <Stack
+                            direction={{ base: "column", sm: "row" }}
+                            align={"start"}
+                            justify={"space-between"}
+                        >
                         </Stack>
-                        {error && (
-                            <Text color={"red.500"} fontSize={"sm"}>
-                                {error}
-                            </Text>
-                        )}
+                        <Button
+                            bg={"#2D9596"}
+                            color={"white"}
+                            _hover={{
+                                bg: "#206a6b",
+                            }}
+                            onClick={handleLogin}
+                        >
+                            Sign in
+                        </Button>
+
                     </Stack>
-                </Box>
-            </Stack>
+                    <Link href="/users" target="_blank">
+                        <Text textAlign='center'>
+                            See list of user
+                        </Text>
+                    </Link>
+                    {error && (
+                        <Text color={"red.500"} fontSize={"sm"}>
+                            {error}
+                        </Text>
+                    )}
+                </Stack>
+            </Flex>
         </Flex>
     );
 }

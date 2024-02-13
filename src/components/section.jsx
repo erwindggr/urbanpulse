@@ -3,15 +3,16 @@ import "keen-slider/keen-slider.min.css"
 import { Flex, Heading, Button, Link } from "@chakra-ui/react";
 import ItemCard from "./itemCard";
 import { useEffect } from "react";
-import { usePhoneScreenMediaQuery } from "../mediaQuery/mediaQueries";
+import { usePhoneScreenMediaQuery, useTabletScreenMediaQuery } from "../mediaQuery/mediaQueries";
 
 export default function Section(props) {
     const [isPhoneScreen] = usePhoneScreenMediaQuery();
+    const [isTabletScreen] = useTabletScreenMediaQuery();
     const [sliderRef] = useKeenSlider({
-        loop: isPhoneScreen ? true : false,
+        loop: isTabletScreen ? true : (isPhoneScreen ? true : false),
         mode: "free-snap",
         slides: {
-            perView: props.data > 4 ? isPhoneScreen ? 5 : 3 : 3,
+            perView: props.data > 4 ? (isPhoneScreen ? 5 : 3) : 4,
             spacing: 10,
         },
     })
@@ -19,12 +20,23 @@ export default function Section(props) {
     return (
         <Flex w='1440px' p="30px 0 50px 0" m='70px auto' flexDirection='column' >
             <Flex w='95%' m='0 auto' alignItems={isPhoneScreen ? 'start' : 'center'} justifyContent='start' flexDirection={isPhoneScreen ? 'column' : 'row'} mb={10}>
-                <Heading textAlign='center' size={isPhoneScreen ? 'md' : 'lg'}>{props.productName}</Heading>
+                <Heading textAlign='center' size={isPhoneScreen ? 'md' : '2xl'} fontFamily="'Red Hat Display', sans-serif">Top Picks</Heading>
                 {
                     isPhoneScreen ? (
                         <></>
                     ) : (
-                        <Button mx={isPhoneScreen ? '0' : '10'} my={isPhoneScreen ? '2' : '0'} borderRadius={30} border='2px solid black'>{props.buttonTitle}</Button>
+                        <Button
+                            mx={isPhoneScreen ? '0' : '10'}
+                            my={isPhoneScreen ? '2' : '0'}
+                            bg='none'
+                            borderRadius={30}
+                            border='1px solid black'
+                            fontWeight='400' fontSize='13px'
+                            _hover={{ bg: 'none', borderColor: '#2D9596', color: '#2D9596' }}
+                            fontFamily="'Lexend', sans-serif"
+                        >
+                            {props.buttonTitle}
+                        </Button>
                     )
                 }
 
@@ -36,9 +48,9 @@ export default function Section(props) {
                         {
                             props.data?.slice().map((item, index) => (
                                 <Flex className="keen-slider__slide" key={index}>
-                                    <Link href={`/product/${item.id}`}>
-                                        <ItemCard key={index} data={item} />
-                                    </Link>
+                                    {/* <Link href={`/product/${item.id}`}> */}
+                                    <ItemCard key={index} data={item} />
+                                    {/* </Link> */}
                                 </Flex>
                             ))
                         }
@@ -48,10 +60,18 @@ export default function Section(props) {
                 )
             }
 
-            <Flex w='95%' m='0 auto'>
+            <Flex w='95%' m='0 auto' mt={5}>
                 {
                     isPhoneScreen ? (
-                        <Button borderRadius={30} border='2px solid black' size='sm' my={2}>
+                        <Button
+                            mx={isPhoneScreen ? '0' : '10'}
+                            my={isPhoneScreen ? '2' : '0'}
+                            bg='none'
+                            borderRadius={30}
+                            border='1px solid black'
+                            fontWeight='400' fontSize='13px'
+                            _hover={{ bg: 'none', borderColor: '#2D9596', color: '#2D9596' }}
+                        >
                             {props.buttonTitle}
                         </Button>
                     ) : (
