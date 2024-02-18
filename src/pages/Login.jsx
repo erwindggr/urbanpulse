@@ -65,10 +65,10 @@ export default function Login() {
                     <Image src={logo} w='200px' />
                 </Flex>
                 <Stack w='80%'>
-                    <FormControl id="email">
-                        <FormLabel>Email address</FormLabel>
+                    <FormControl id="username">
+                        <FormLabel>Username</FormLabel>
                         <Input
-                            type="email"
+                            type="username"
                             value={userName}
                             onChange={(e) => setUserName(e.target.value)}
                         />

@@ -12,8 +12,8 @@ export default function Section(props) {
         loop: isTabletScreen ? true : (isPhoneScreen ? true : false),
         mode: "free-snap",
         slides: {
-            perView: props.data > 4 ? (isPhoneScreen ? 5 : 3) : 4,
-            spacing: 10,
+            perView: props.data > 4 ? (isPhoneScreen ? 2 : 3) : 3,
+            spacing: 5,
         },
     })
 
@@ -25,18 +25,20 @@ export default function Section(props) {
                     isPhoneScreen ? (
                         <></>
                     ) : (
-                        <Button
-                            mx={isPhoneScreen ? '0' : '10'}
-                            my={isPhoneScreen ? '2' : '0'}
-                            bg='none'
-                            borderRadius={30}
-                            border='1px solid black'
-                            fontWeight='400' fontSize='13px'
-                            _hover={{ bg: 'none', borderColor: '#2D9596', color: '#2D9596' }}
-                            fontFamily="'Lexend', sans-serif"
-                        >
-                            {props.buttonTitle}
-                        </Button>
+                        <Link href="/shop/women's%20clothing">
+                            <Button
+                                mx={isPhoneScreen ? '0' : '10'}
+                                my={isPhoneScreen ? '2' : '0'}
+                                bg='none'
+                                borderRadius={30}
+                                border='1px solid black'
+                                fontWeight='400' fontSize='13px'
+                                _hover={{ bg: 'none', borderColor: '#2D9596', color: '#2D9596' }}
+                                fontFamily="'Lexend', sans-serif"
+                            >
+                                {props.buttonTitle}
+                            </Button>
+                        </Link>
                     )
                 }
 
@@ -63,17 +65,19 @@ export default function Section(props) {
             <Flex w='95%' m='0 auto' mt={5}>
                 {
                     isPhoneScreen ? (
-                        <Button
-                            mx={isPhoneScreen ? '0' : '10'}
-                            my={isPhoneScreen ? '2' : '0'}
-                            bg='none'
-                            borderRadius={30}
-                            border='1px solid black'
-                            fontWeight='400' fontSize='13px'
-                            _hover={{ bg: 'none', borderColor: '#2D9596', color: '#2D9596' }}
-                        >
-                            {props.buttonTitle}
-                        </Button>
+                        <Link href="/shop/women's%20clothing">
+                            <Button
+                                mx={isPhoneScreen ? '0' : '10'}
+                                my={isPhoneScreen ? '2' : '0'}
+                                bg='none'
+                                borderRadius={30}
+                                border='1px solid black'
+                                fontWeight='400' fontSize='13px'
+                                _hover={{ bg: 'none', borderColor: '#2D9596', color: '#2D9596' }}
+                            >
+                                {props.buttonTitle}
+                            </Button>
+                        </Link>
                     ) : (
                         <></>
                     )
