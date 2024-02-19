@@ -1,14 +1,16 @@
-import { Button, Link } from "@chakra-ui/react"
+import { Button, Link } from "@chakra-ui/react";
+import { usePhoneScreenMediaQuery, useTabletScreenMediaQuery } from "../mediaQuery/mediaQueries";
 
 export default function BigButton(props) {
-
+    const [isPhoneScreen] = usePhoneScreenMediaQuery();
+    const [isTabletScreen] = useTabletScreenMediaQuery();
     const buttonStyles = {
         bg: "#2D9596",
         color: "white",
-        px: "5",
-        py: "6",
+        px: isPhoneScreen ? "4" : "5",
+        py: isPhoneScreen ? "4" : "6",
         borderRadius: "30",
-        fontSize: "md",
+        fontSize: isPhoneScreen ? "xs" : isTabletScreen ? "sm" : "md",
         transition: "background-color 0.4s, color 0.5s"
     };
 

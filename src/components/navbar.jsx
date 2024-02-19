@@ -15,6 +15,7 @@ import ShoppingCart from './shoppingCart';
 import NavDrawer from './navbarDrawer';
 import { useLocation } from "react-router-dom";
 import { CartContext } from '../context/cartContext';
+import { usePhoneScreenMediaQuery, useTabletScreenMediaQuery } from '../mediaQuery/mediaQueries';
 
 export default function Navbar() {
     const { cart } = useContext(CartContext);
@@ -28,6 +29,8 @@ export default function Navbar() {
     const location = useLocation();
     const { colorMode } = useColorMode();
     const logoSrc = colorMode === 'light' ? logo_light : logo_dark;
+    const [isPhoneScreen] = usePhoneScreenMediaQuery();
+    const [isTabletScreen] = useTabletScreenMediaQuery();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -47,7 +50,7 @@ export default function Navbar() {
     };
 
     const [isNarrowScreen] = useMediaQuery("(max-width: 1450px)");
-    const [isPhoneScreen] = useMediaQuery("(max-width: 1200px)")
+    // const [isPhoneScreen] = useMediaQuery("(max-width: 1200px)")
 
     useEffect(() => {
         setIsSmallScreen(isNarrowScreen);

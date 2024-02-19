@@ -60,7 +60,7 @@ export default function Footer() {
             >
                 <Flex w={isPhoneScreen ? 'full' : 'none'}>
                     <Text>
-                        Urbania 456 Style Street,, Batam City, Indonesia
+                        Urbania 456 Style Street, Batam, Indonesia
                     </Text>
                 </Flex>
                 <Flex w={isPhoneScreen ? 'full' : '400px'} justifyContent='space-around' flexDir={isPhoneScreen ? 'column' : 'row'}>

@@ -62,7 +62,7 @@ export default function NavDrawer(props) {
                                         cursor: 'pointer'
                                     }}
                                 >
-                                    <Text fontWeight='bold' fontSize='xl' my={3} color='#2D9596' >
+                                    <Text fontWeight='bold' fontSize='xl' my={3} color='black' >
                                         Women
                                     </Text>
                                 </Link>
@@ -76,7 +76,7 @@ export default function NavDrawer(props) {
                                         cursor: 'pointer'
                                     }}
                                 >
-                                    <Text fontWeight='bold' fontSize='xl' my={3} color='#2D9596'>
+                                    <Text fontWeight='bold' fontSize='xl' my={3} color='black'>
                                         Men
                                     </Text>
                                 </Link>
@@ -90,7 +90,7 @@ export default function NavDrawer(props) {
                                         cursor: 'pointer'
                                     }}
                                 >
-                                    <Text fontWeight='bold' fontSize='xl' my={3} color='#2D9596'>
+                                    <Text fontWeight='bold' fontSize='xl' my={3} color='black'>
                                         Jewelery
                                     </Text>
                                 </Link>
@@ -104,7 +104,7 @@ export default function NavDrawer(props) {
                                         cursor: 'pointer'
                                     }}
                                 >
-                                    <Text fontWeight='bold' fontSize='xl' my={3} color='#2D9596'>
+                                    <Text fontWeight='bold' fontSize='xl' my={3} color='black'>
                                         Electronics
                                     </Text>
                                 </Link>
