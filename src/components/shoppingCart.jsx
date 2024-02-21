@@ -8,7 +8,7 @@ import {
     DrawerContent,
     useDisclosure,
     DrawerCloseButton,
-    Image, Tooltip
+    Image, Tooltip, Link
 } from "@chakra-ui/react";
 import { Flex, Heading, Text, Divider } from "@chakra-ui/react";
 import { ChevronLeftIcon, ChevronRightIcon, SmallCloseIcon } from '@chakra-ui/icons'
@@ -57,20 +57,23 @@ export default function ShoppingCart(props) {
                 <DrawerContent>
                     <DrawerHeader bg='#2D9596'>
                         <DrawerCloseButton color='white' pos='absolute' top={4} />
-                        <Flex justifyContent='space-between' w='full' >
-                            <Heading size='lg' color='white'>Shopping Cart</Heading>
-                            {/* <Text fontWeight='bold' color='white' mr={10}>{cart.cart.cart.length} Items</Text> */}
+                        <Flex justifyContent='flex-start' w='full' flexDir='column'>
+                            <Heading size='md' color='white' fontFamily="'Red Hat Display', sans-serif">Your Cart</Heading>
                         </Flex>
                     </DrawerHeader>
                     <Divider />
 
                     <DrawerBody>
-                        {/* <Flex w='full' bg='darkgrey' flexDir='column' justifyContent='space-between'> */}
                         {cart.map(item => (
-                            <Flex h='120px' w='full' key={item.id} justifyContent='space-between' alignItems='center' mb={2} borderBottom='1px solid gray' fontFamily="'Red Hat Display', sans-serif">
+                            <Flex
+                                h='120px' w='full' key={item.id}
+                                justifyContent='space-between' alignItems='center'
+                                mb={2} fontFamily="'Red Hat Display', sans-serif"
+                                boxShadow="rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px"
+                            >
                                 <Image bg='white' src={item.image} w='20%' h='90px' objectFit='scale-down' ml={2} borderRadius='10' />
                                 <Flex w='60%' flexDir='column'>
-                                    <Text fontWeight={500}>
+                                    <Text fontWeight={500} color='gray.600'>
                                         {
                                             item.title.length > 25 ?
                                                 `${item.title.slice(0, 25)}...`
@@ -82,7 +85,7 @@ export default function ShoppingCart(props) {
                                     <Flex justifyContent='space-between'>
                                         <Flex p={1}>
                                             <IconButton size='xs' borderRadius='full' icon={<IoIosRemove />} bg='none' onClick={() => decreaseAmount(item.id)} />
-                                            <Text mx={3} px={5} borderBottom='1px solid #2D9596'>
+                                            <Text mx={1} px={5} borderBottom='1px solid #2D9596'>
                                                 {item.amount}
                                             </Text>
                                             <IconButton size='xs' borderRadius='full' icon={<IoIosAdd />} bg='none' onClick={() => increaseAmount(item.id)} />
@@ -95,51 +98,55 @@ export default function ShoppingCart(props) {
                                 <IconButton onClick={() => removeFromCart(item.id)} mr={2} size='xs' icon={<FiX />} borderRadius='full' bg='none' />
                             </Flex>
                         ))}
-                        {/* <Flex>
-                            {
-                                cart.map((item) => {
-                                    return <Flex>
-                                        item
-                                    </Flex>
-                                })
-                            }
-                        </Flex> */}
                     </DrawerBody>
 
-                    <DrawerFooter borderTop='1px solid gray'>
-                        <Flex w='full' flexDir='column' fontFamily="'Red Hat Display', sans-serif">
-                            <Flex w='full' justifyContent='space-between' py={5}>
-                                <Text fontWeight={500}>
-                                    Subtotal
-                                </Text>
-
-                                {
-                                    calculateTotal() == 0 ? (
-                                        <></>
-                                    ) : (
-                                        <Text fontWeight='500'>
-                                            $ {calculateTotal()}
-                                        </Text>
-                                    )
-                                }
-
+                    <DrawerFooter>
+                        <Flex flexDir='column' w='full'>
+                            <Flex w='full' justifyContent='center' mb={4}>
+                                <Link onClick={() => clearCart()}>
+                                    <Text fontWeight='bold' fontFamily="'Red Hat Display', sans-serif">
+                                        Clear
+                                        {
+                                            ` ${cart.reduce((total, item) => {
+                                                return total + item.amount;
+                                            }, 0)} item`
+                                        }
+                                    </Text>
+                                </Link>
                             </Flex>
+                            <Flex
+                                w='full' flexDir='column'
+                                fontFamily="'Red Hat Display', sans-serif"
+                                px={5} borderRadius={10}
+                                bg='#2D9596' color='white'
+                                boxShadow="rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px"
+                            >
 
-                            <Flex alignItems='center'>
-                                <Button
-                                    bg='#2D9596' color='white'
-                                    w='full' my={5} fontWeight={300}
-                                    _hover={{ bg: 'white', color: '#2D9596', border: '1px solid #2D9596' }}
-                                >
-                                    Checkout
-                                </Button>
-                                <Tooltip label='Clear all' bg='maroon' hasArrow fontSize='md' placement="top-start">
-                                    <IconButton
-                                        color='white' icon={<FiTrash2 />}
-                                        ml={5} bg='maroon' onClick={() => clearCart()}
-                                        _hover={{ bg: 'white', color: 'maroon', border: '1px solid maroon' }}
-                                    />
-                                </Tooltip>
+                                <Flex w='full' justifyContent='space-between' py={5}>
+                                    <Text fontWeight={500}>
+                                        Subtotal
+                                    </Text>
+
+                                    {
+                                        calculateTotal() == 0 ? (
+                                            <></>
+                                        ) : (
+                                            <Text fontWeight='500'>
+                                                $ {calculateTotal()}
+                                            </Text>
+                                        )
+                                    }
+                                </Flex>
+
+                                <Flex alignItems='center'>
+                                    <Button
+                                        bg='white' color='#2D9596'
+                                        w='full' my={5} fontWeight={400}
+                                        _hover={{ color: '#2D9596', border: '2px solid #43766C', fontWeight: '600' }}
+                                    >
+                                        Checkout
+                                    </Button>
+                                </Flex>
                             </Flex>
                         </Flex>
                     </DrawerFooter>

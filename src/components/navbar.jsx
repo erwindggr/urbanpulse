@@ -88,16 +88,17 @@ export default function Navbar() {
                     )
             }
 
-            <Flex w='100%' px={isVertical ? 5 : 10} m='0 auto' justifyContent='space-between' alignItems='center' py={5} bg='#f7f7f5'>
+            <Flex w='100%' px={isVertical ? 5 : 10} m='0 auto' justifyContent='space-between' alignItems='center' py={5} bg='#EEEEEE'>
                 {
-                    isVertical ? (
-                        <>
-                            <NavDrawer categories={data} />
-                            <Link href="/">
-                                <Image src={logoSrc} h={isSmallScreen ? "30px" : "40px"} />
-                            </Link>
-                        </>
-                    ) :
+                    isVertical ?
+                        (
+                            <>
+                                <NavDrawer categories={data} />
+                                <Link href="/">
+                                    <Image src={logoSrc} h={isSmallScreen ? "30px" : "40px"} />
+                                </Link>
+                            </>
+                        ) :
                         (
                             <Flex h='100%' alignItems='center'>
                                 <Link href="/">

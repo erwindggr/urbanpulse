@@ -18,7 +18,7 @@ export default function Section(props) {
     })
 
     return (
-        <Flex w='1440px' p="30px 0 50px 0" m='70px auto' flexDirection='column' >
+        <Flex w='1400px' p="30px 0 50px 0" m='70px auto' flexDirection='column' >
             <Flex w='95%' m='0 auto' alignItems={isPhoneScreen ? 'start' : 'center'} justifyContent='start' flexDirection={isPhoneScreen ? 'column' : 'row'} mb={10}>
                 <Heading textAlign='center' size={isPhoneScreen ? 'md' : '2xl'} fontFamily="'Red Hat Display', sans-serif">Top Picks</Heading>
                 {

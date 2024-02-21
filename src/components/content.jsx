@@ -5,10 +5,10 @@ export default function Content(props) {
     const [isPhoneScreen] = usePhoneScreenMediaQuery();
 
     return (
-        <Flex w={isPhoneScreen ? '100%' : '90%'} h={isPhoneScreen ? '400px' : '830px'} bg='gray' m='0px auto 100px' position='relative'>
+        <Flex w={isPhoneScreen ? '100%' : '90%'} h={isPhoneScreen ? '400px' : '830px'} m={isPhoneScreen ? '0px auto 10px' : '0px auto 100px'} position='relative'>
             <Image
                 src={props.source}
-                w='100%' objectFit='cover'
+                w='100%' objectFit={props.objFit}
             />
             <Flex
                 w={isPhoneScreen ? '50%' : '20%'}

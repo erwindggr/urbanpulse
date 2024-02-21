@@ -4,9 +4,11 @@ import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
+import Content from "../components/content";
 import { usePhoneScreenMediaQuery, useTabletScreenMediaQuery } from "../mediaQuery/mediaQueries";
 // import store from "../redux/Stores/CartStore";
 import { CartContext } from "../context/cartContext";
+import content01 from "../image/content-04.jpg";
 
 export default function ProductPage() {
     const { addToCart } = useContext(CartContext)
@@ -46,7 +48,7 @@ export default function ProductPage() {
         }
 
         const descriptionLines = productData.description.split(/[,\.]/).map((line, index) => (
-            <Text ml={5} fontSize='sm' key={index}>{line.trim()}</Text>
+            <Text fontSize='sm' key={index}>{line.trim()}</Text>
         ));
 
         return descriptionLines;
@@ -61,12 +63,12 @@ export default function ProductPage() {
                     productData ? (
                         <Flex w='full' justifyContent='space-between' flexDir={isPhoneScreen ? 'column' : 'row'}>
                             <Flex w={isPhoneScreen ? '100%' : '40%'}>
-                                <Image w='100%' h='500' objectFit='scale-down' src={productData.image} />
+                                <Image w={isPhoneScreen ? '95%' : '100%'} h={isPhoneScreen ? 300 : isTabletScreen ? 400 : 500} objectFit='scale-down' src={productData.image} />
                             </Flex>
 
                             <Flex w={isPhoneScreen ? '100%' : '50%'} p={isPhoneScreen ? 'none' : 10} mt={isPhoneScreen ? 10 : 0} flexDir='column' justifyContent='space-between'>
                                 <Box>
-                                    <Heading size='lg'>
+                                    <Heading size={isPhoneScreen ? 'md' : 'lg'}>
                                         {productData.title}
                                     </Heading>
                                     <Flex w='full' my={3}>
@@ -75,7 +77,7 @@ export default function ProductPage() {
                                         </Badge>
                                         <Text ml={2} fontSize='xs' fontWeight='500' color='gray'>{productData.rating.count} reviews</Text>
                                     </Flex>
-                                    <Text fontSize='lg' fontWeight='bold'>
+                                    <Text fontSize={isPhoneScreen ? 'md' : 'lg'} fontWeight='bold'>
                                         ${productData.price}
                                     </Text>
                                     {/* Color */}
@@ -88,7 +90,7 @@ export default function ProductPage() {
                                                 rounded="full"
                                                 borderWidth={selectedColor === "Bisque" ? "2px" : "1px"}
                                                 borderColor={selectedColor === "Bisque" ? "green" : "black"}
-                                                
+
                                                 onClick={() => handleColorClick("Bisque")}
                                             />
                                             <Button
@@ -110,9 +112,9 @@ export default function ProductPage() {
                                         </ButtonGroup>
                                     </Flex>
                                     {/* Size */}
-                                    <Flex mt={3} flexDir='column'>
-                                        <Text fontSize='sm'>Available Sizes:</Text>
-                                        <ButtonGroup spacing="4" mt={2}>
+                                    <Flex mt={5} flexDir='column'>
+                                        <Text fontSize='sm' color='gray'>Available Sizes:</Text>
+                                        <ButtonGroup spacing="4" mt={1}>
                                             {["XXS", "XS", "S", "M", "L", "XL"].map((size, index) => (
                                                 <Button
                                                     key={index}
@@ -127,18 +129,17 @@ export default function ProductPage() {
                                             ))}
                                         </ButtonGroup>
                                     </Flex>
-
-                                    <Flex mt={isPhoneScreen ? 8 : 0} align="center" flexDir='column'>
-
-                                    <Button m='0 auto' colorScheme='teal' variant='solid' mt={3} w='full'
-                                        onClick={() => addToCart(productData, productData.id)}
-                                    >
-                                        Add to cart
-                                    </Button>
-                                </Flex>
+                                    {/* Button */}
+                                    <Flex mt={isPhoneScreen ? 8 : 5} align="center" flexDir='column'>
+                                        <Button m='0 auto' colorScheme='teal' variant='solid' mt={3} w='full'
+                                            onClick={() => addToCart(productData, productData.id)}
+                                        >
+                                            Add to cart
+                                        </Button>
+                                    </Flex>
 
                                     <Flex flexDir='column' mt={5}>
-                                        <Text color='gray' mb={4}>Descriptions : </Text>
+                                        <Text color='gray' mb={4} fontSize='md'>Descriptions : </Text>
                                         {renderDescriptionLines()}
                                     </Flex>
                                 </Box>
@@ -160,6 +161,15 @@ export default function ProductPage() {
                     )
                 }
             </Flex>
+
+            <Content
+                source={content01} title='Experience Unmatched Quality in Every Thread'
+                message=
+                'Discover Superior Fabrics Crafted for Excellence'
+                objFit="scale-down"
+                rightPercentage={isPhoneScreen ? '40%' : '75%'}
+                topPercentage={isPhoneScreen ? '10%' : '20%'}
+            />
 
             <Footer />
         </Flex>

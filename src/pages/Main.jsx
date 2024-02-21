@@ -90,6 +90,7 @@ export default function Main() {
                 source={content01} title='Experience Unmatched Quality in Every Thread'
                 message=
                 'Discover Superior Fabrics Crafted for Excellence' 
+                objFit="cover"
                 rightPercentage={isPhoneScreen ? '40%' : '75%'}
                 topPercentage={isPhoneScreen ? '10%' : '20%'}
             />

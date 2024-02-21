@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Box, Flex, Heading, Text, Image, Button } from "@chakra-ui/react";
 import '../css/heroImage.css';
-import heroImg1 from "../image/horizontal-01.jpg";
-import heroImg2 from "../image/hero2.jpg";
-import heroImg3 from "../image/horizontal-03.jpg";
+import heroImg1 from "../image/h1.jpg";
+import heroImg2 from "../image/h5.jpg";
+import heroImg3 from "../image/h2.jpg";
 import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
 import BigButton from "./bigButton";
